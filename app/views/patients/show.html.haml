@@ -1,0 +1,28 @@
+%p= link_to t('default_action.go_back'), patients_path, class: "btn btn-xs btn-primary"
+
+%p#notice= notice
+
+%h1
+  %b= @patient.full_name
+%p
+  %b
+    = t("patient.patient_id") + ":"
+  = @patient.patient_id
+%p
+  %b
+    = t("patient.date_of_birth") + ":"
+  = @patient.date_of_birth
+%p
+  %b
+    = t("patient.notes") + ":"
+  = @patient.notes
+%p
+  %b
+    = t("clinical_trial.clinical_trial") + ":"
+  = @patient.clinical_trial.study_title if @patient.clinical_trial.present?
+%p
+  %b
+    = t("arm.arm") + ":"
+  = @patient.arm.name if @patient.arm.present?
+
+= link_to t('edit'), edit_patient_path(@patient)

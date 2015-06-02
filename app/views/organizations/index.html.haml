@@ -1,0 +1,21 @@
+%h1= t('organization.listing')
+
+%table.table
+  %thead
+    %tr
+      %th= t('organization.name', :default => 'Name')
+      %th
+      %th
+      %th
+      
+  %tbody
+    - @organizations.each do |organization|
+      %tr
+        %td= organization.name
+        %td= link_to t('default_action.show'), organization
+        %td= link_to t('default_action.edit'), edit_organization_path(organization)
+        %td= link_to t('default_action.destroy'), organization, :method => :delete, :data => { :confirm => "#{t('are_you_sure_confirmation')}" }
+
+%br
+
+= link_to t('organization.create_new'), new_organization_path

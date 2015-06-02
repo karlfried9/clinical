@@ -1,0 +1,29 @@
+%p#notice= notice
+
+= link_to 'View all activities list', patient_activities_path, class: "btn btn-primary"
+
+%h1 Patient Activity
+%p
+  %b Patient:
+  = @patient_activity.patient.first_name + " " + @patient_activity.patient.last_name
+%p
+  %b Clinical trial:
+  = @patient_activity.clinical_trial.name
+%p
+  %b Activity date:
+  = @patient_activity.activity_date
+%p
+  %b Body part:
+  = @patient_activity.body_part
+%p
+  %b Prescription written:
+  = @patient_activity.prescription_written
+%p
+  %b Prescription notes:
+  = @patient_activity.prescription_notes
+%p
+  %b Amount charged:
+  = @patient_activity.amount_charged
+
+= link_to 'Edit', edit_patient_activity_path(@patient_activity)
+\|

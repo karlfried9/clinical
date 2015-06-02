@@ -1,0 +1,25 @@
+%h1= t('payment.listing_payments_title')
+
+%table
+  %thead
+    %tr
+      %th Patient invoice
+      %th Amount
+      %th Currency code
+      %th
+      %th
+      %th
+      
+  %tbody
+    - @payments.each do |payment|
+      %tr
+        %td= payment.invoice_id
+        %td= payment.amount
+        %td= payment.currency_code
+        %td= link_to 'Show', payment
+        %td= link_to 'Edit', edit_payment_path(payment)
+        %td= link_to 'Destroy', payment, :method => :delete, :data => { :confirm => "#{t('are_you_sure_confirmation')}" }
+
+%br
+
+= link_to 'New Payment', new_payment_path

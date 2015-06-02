@@ -1,0 +1,216 @@
+%p= link_to t('default_action.go_back'), manage_visits_clinical_trial_path(@clinical_trial, @clinical_trial_visit), class: 'btn btn-primary btn-xs'
+-#todo: Should be able to add an activity multiple times, e.g. multiple xrays
+
+%h1
+  =t("visit.edit_visit") + " " + t("visit.for") + ": "
+  %b= @clinical_trial_visit.name
+%h2
+  = t("clinical_trial.clinical_trial")+ ": "
+  %b= @clinical_trial.study_title
+
+.row
+  .col-sm-12
+    = simple_form_for @clinical_trial_visit, :url => update_visit_clinical_trial_path, :method => :post do |f|
+      = f.input :name
+      .form-group
+        =   f.label :description
+        = f.text_area :description, :class => "form-control"
+      .row
+        .col-sm-6
+          = f.association :visit_type, :label_method => :name, :value_method => :id
+        .col-sm-6
+          = f.association :visit_format, :label_method => :name, :value_method => :id
+      .well#offset_info
+        .row
+          %p
+            = t('clinical_trial_visit.offset_description')
+          %h2
+            = t("visit.should_occur")
+          .col-sm-4
+            = label_tag t('clinical_trial_visit.how_many_days')
+            = text_field_tag "clinical_trial_visit[offset_days]", @clinical_trial_visit.offset_days, :class => "text form-control"
+          .col-sm-4
+            //= label_tag "after visit:"
+            //= text_field_tag "clinical_trial_visit[after_visit]", '', :class => "text form-control"
+            = f.association :after_visit, collection: @clinical_trial.visits.where('id <> ?', @clinical_trial_visit.id), :label_method => :name, :value_method => :id
+          .col-sm-4
+            = label_tag t("clinical_trial.visit.within_plus_minus_days")
+            = text_field_tag "clinical_trial_visit[tolerance_number_of_days]", @clinical_trial_visit.tolerance_number_of_days, :class => "text form-control"
+
+      .row
+        %h3= t('visit.activities_during_visit')
+        %table.table#tbl_activities
+          %thead
+            %th
+              = t("activity.activity")
+            %th
+              = t("activity.category")
+            %th
+              = t("activity.amount")
+            %th
+              = t("activity.action")
+            %th
+          %tbody
+        .row
+          .col-xs-12
+            %h4= t("activity.add_more", :default => "Add More")
+          .col-xs-8
+            //= text_field_tag 'search', nil, :class => 'form-control', :placeholder => t("activity.activity", :default => "Activity"), data: {autocomplete: autocomplete_activity_name_activities_path}, :autocomplete=>"off", :id => 'activity_autocomplete'
+            %select.form-control{:name => 'source_activities', :id => 'source_activities', :class => 'form-control'}
+              - @source_activities.each do |activity|
+                %option{:value => activity.id}
+                  = activity.name
+          .col-xs-4
+            = button_tag t("activity.add"), :type => "button", :class => "btn btn-primary", :id => "btn_add_activity", :onclick => "addActivity();"
+        %hr
+      = f.button :submit, class: "btn btn-success"
+.modal.fade#editDlg
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %a.close{"data-dismiss" => "modal"}
+          = "x"
+
+        %h4.modal-title
+          %b
+            = t("arm.add_arm")
+      .modal-body
+        %p
+          %b
+            = t("clinical_trial.clinical_trial") + " " + @clinical_trial.study_title
+        //.form-group
+        //  = label_tag t("activity.name")
+        //  = text_field_tag "name", "", :class => "text optional form-control"
+        .form-group
+          = label_tag t("activity.amount", :default => "Amount")
+          = text_field_tag "amount", "", :class => "text optional form-control"
+
+      .modal-footer
+        = button_tag "#{t("arm.cancel", :default => "Cancel")}", class: "btn btn-cancel", "data-dismiss" => "modal"
+        = button_tag "#{t("arm.save", :default => "Save")}", type: "button", class: "btn btn-success", :onclick => "changeActivity();"
+
+:javascript
+  var searched_activity = '';
+  var selected_activity = '';
+  var activities = {};
+  var source_activities = {};
+
+  $(document).ready(function(){
+    $('#activity_autocomplete').bind('autocompleteselect', function(event, ui) {
+      searched_activity = ui.item.obj;
+    });
+    initActivities();
+    $('#source_activities').select2({
+      placeholder: "Select Activity",
+      allowClear: true
+    });
+
+    //trigger functions for select2
+    $('#source_activities').on("change", function (e) { selectActivity(e); });
+    $('#clinical_trial_visit_type_id').on("change", function (e) { showOffsetWindow(); });
+
+    //hide offset_info div by default
+    showOffsetWindow();
+  });
+
+  function initActivities() {
+    var data = '#{@activities_json}';
+    var objs = {};
+    if (data != '') {
+      objs = JSON.parse('#{@activities_json}');
+      for (var i = 0; i < objs.length; i++) {
+        activities[objs[i].id] = objs[i].obj;
+        var row = "<tr id='activity" + activities[objs[i].id].activity_id + "'>" + getActivityRowHtml(activities[objs[i].id]) + "</tr>";
+        $('#tbl_activities > tbody:last').append(row);
+      }
+    }
+    objs = JSON.parse('#{@source_activities_json}');
+    for (var i = 0; i < objs.length; i++) {
+      source_activities[objs[i].id] = objs[i].obj;
+    }
+    searched_activity = objs[0].obj;
+  }
+
+  function selectActivity(e) {
+    searched_activity = source_activities[e.val];
+  }
+
+  function showOffsetWindow() {
+    e = $('#clinical_trial_visit_type_id').val();
+    if (e == "2") {
+      $('#offset_info').show();
+    } else {
+      $('#offset_info').hide();
+    }
+  }
+
+  function addActivity() {
+    console.log("s");
+    console.log(searched_activity);
+    if ( searched_activity == '') {
+      return;
+    }
+    if ( searched_activity.id in activities) {
+      alert('#{t("activities.already_exists_alert")}');
+      return;
+    }
+    activity_id = searched_activity.id;
+    activities[searched_activity.id] = clone(searched_activity);
+    activities[searched_activity.id]['activity_id'] = activity_id;
+    activities[searched_activity.id].id = "";
+    var row = "<tr id='activity" + searched_activity.activity_id + "'>" + getActivityRowHtml(activities[searched_activity.id]) + "</tr>";
+    console.log(row);
+    $('#tbl_activities > tbody:last').append(row);
+    searched_activity = '';
+    $('#activity_autocomplete').val('');
+    return;
+  }
+
+  function clone(obj) {
+    if (null == obj || "object" != typeof obj) return obj;
+    var copy = obj.constructor();
+    for (var attr in obj) {
+        if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
+    }
+    return copy;
+  }
+
+  function getActivityRowHtml(activity) {
+    /*if ('activity_id' in activity) {
+      id = activity.id;
+      activity_id = activity.activity_id;
+    } else {
+      id = "";
+      activity_id = activity.id;
+    }*/
+    var html =
+          "<td>" + "<input type='hidden' name='activities[][activity_id]' value='" + activity.activity_id + "'>"
+          + "<input type='hidden' name='activities[][id]' value='" + activity.id + "'>"
+          + activity.name + "<input type='hidden' name='activities[][name]' value='" + activity.name + "'></td>"
+          + "<td>" + activity.category_list.join() + "<input type='hidden' name='activities[][category_list]' value='" + activity.category_list.join() + "'></td>"
+          + "<td>" + number_to_euro(activity.amount) + "<input type='hidden' name='activities[][amount]' value='" + activity.amount + "'></td>"
+          + "<td><a href='#' onclick='editActivity(" + activity.activity_id + ")'>Modifier</a></td>"
+          + "<td><a href='#' onclick='removeActivity(" + activity.activity_id + ")'>Effacer</a></td>";
+    return html;
+  }
+
+
+
+  function removeActivity(id) {
+    delete activities[id];
+    $('#activity'+id).remove();
+  }
+
+  function editActivity(id) {
+    selected_activity = activities[id];
+    //$("#editDlg input[name=name]").val(activities[id].name);
+    $("#editDlg input[name=amount]").val(activities[id].amount);
+    $("#editDlg").modal('show');
+  }
+
+  function changeActivity() {
+    //selected_activity.name = $("#editDlg input[name=name]").val();
+    selected_activity.amount = $("#editDlg input[name=amount]").val();
+    $('#activity'+selected_activity.activity_id).html(getActivityRowHtml(selected_activity));
+    $("#editDlg").modal('hide');
+  }

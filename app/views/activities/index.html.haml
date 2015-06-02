@@ -1,0 +1,38 @@
+%p
+  = link_to t("default_action.go_back"), :root, :class => 'btn btn-xs btn-primary'
+
+%h1= t('activities.listing_activities_page_title')
+
+.lead
+  = t('activities.description')
+= link_to t('activities.add_new_activity_button'), new_activity_path, :class => 'btn btn-large btn-success'
+
+%table.table.table-hover
+  %thead
+    %tr
+      %th= t('activity.name')
+      %th= t('activity.type')
+      %th= t('activity.category')
+      %th= t('activity.billable')
+      %th= t('activity.amount')
+      %th= t('description')
+      %th
+      %th
+      %th
+
+  %tbody
+    - @activities.each do |activity|
+      %tr
+        %td= activity.name
+        %td= t('activity_type.' + activity.type.name.downcase)
+        %td= activity.category_list
+        %td.text-center
+          - if activity.billable
+            %span.glyphicon.glyphicon-ok{"aria-hidden" => "true"}
+        %td= number_to_currency activity.amount
+        %td= activity.description
+        %td= link_to t('default_action.show'), activity
+        %td= link_to t('default_action.edit'), edit_activity_path(activity)
+        %td= link_to t('default_action.destroy'), activity, :method => :delete, :data => { :confirm => "#{t('are_you_sure_confirmation')}" }
+
+

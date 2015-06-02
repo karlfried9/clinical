@@ -1,0 +1,12 @@
+%p
+  = link_to t("default_action.go_back"), trial_sponsors_path, :class => 'btn btn-xs btn-primary'
+
+%p#notice= notice
+
+%h1
+  = @trial_sponsor.name
+%p
+  %b Contact info:
+  = simple_format @trial_sponsor.contact_info
+
+= link_to t('edit'), edit_trial_sponsor_path(@trial_sponsor), class: "btn btn-primary"

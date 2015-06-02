@@ -1,0 +1,8 @@
+%p
+  = link_to t('default_action.go_back'), clinical_trials_path, class: "btn btn-xs btn-primary"
+%h1
+  = t("clinical_trial.editing_clinical_trial")
+
+= render 'form'
+
+= link_to t('show'), @clinical_trial

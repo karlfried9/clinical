@@ -1,0 +1,48 @@
+%p
+  = link_to t("default_action.go_back"), :root, :class => 'btn btn-xs btn-primary'
+
+%p.text-right
+  =link_to t("general.export_to_excel"), excel_patient_list_path(:xlsx), class: "btn btn-lg btn-primary"
+
+%h1= t('patient.patients', :default => "Patients")
+= link_to t('patient.add_new_patient', :default=>'Add New Patient'), new_patient_path, class: "btn btn-success btn-lg"
+
+%table.table
+  %thead
+    %tr
+      %th= t('patient.name')
+      %th= t('patient.patient_id', :default=>'Patient ID')
+      %th= t('clinical_trial.clinical_trial')
+      %th= t('arm.arm_name')
+      %th= t('visit.name_of_most_recent_visit')
+      %th
+      %th
+      %th
+      
+  %tbody
+    - @patients.each do |patient|
+      %tr
+        %td= patient.full_name
+        %td= patient.patient_id
+        %td
+          - if patient.clinical_trial
+            = link_to truncate(patient.clinical_trial.study_title), patient.clinical_trial
+          - else
+            = link_to t('patient.clinical_trial_not_assigned'), edit_patient_path(patient)
+        %td
+          - if patient.arm
+            = patient.arm.name
+
+
+        %td
+          - if patient.patient_visits.last
+            = l patient.patient_visits.last.recorded_date
+            = ": "+ truncate(patient.patient_visits.last.clinical_trial_visit.name)
+          - else
+            = t('patient.no_visits_recorded')
+        %td= link_to t('default_action.show'), patient
+        %td= link_to t('default_action.edit'), edit_patient_path(patient)
+        %td= link_to t('default_action.destroy'), patient, :method => :delete, :data => { :confirm => "#{t('are_you_sure_confirmation')}" }
+
+%br
+= will_paginate @patients,  renderer: BootstrapPagination::Rails

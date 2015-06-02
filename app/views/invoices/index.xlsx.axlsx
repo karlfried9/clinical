@@ -1,0 +1,26 @@
+wb = xlsx_package.workbook
+
+wb.styles do |s|
+    header =  s.add_style  :bg_color => "0000FF", :fg_color => "FF", :sz => 12, :alignment => { :horizontal=> :center }
+    wb.add_worksheet(name: t("invoice.invoices")) do |sheet|
+        sheet.add_row
+        sheet.add_row [t('general.export_time') +  ":" + Time.now.in_time_zone.strftime("%Y-%m-%d %H:%M:%S") ]
+        sheet.add_row
+        sheet.add_row [t('invoice.invoice_number'), t("invoice.created_date"), t("invoice.clinical_trial_name"), t("invoice.invoice_status"), t("invoice.amount"), t("invoice.paid")], style: header
+
+        @invoices.each do |invoice|
+            total_amount = 0
+            invoice.patient_activities.each do |activity|
+                total_amount = total_amount + activity.amount
+            end
+
+            paid_amount = 0
+            invoice.payments.each do |payment|
+                paid_amount = paid_amount + payment.amount
+            end
+
+            sheet.add_row [invoice.id, invoice.created_at.in_time_zone.to_s(:db), invoice.clinical_trial.study_title, t("invoice." + invoice.status), total_amount, paid_amount]
+        end
+        sheet.column_widths 20, 20, 50, 30, 20, 20, 20
+    end
+end

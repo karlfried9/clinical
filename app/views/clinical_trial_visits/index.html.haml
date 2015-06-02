@@ -1,0 +1,19 @@
+%h1= t('clinical_trial_visits.listing')
+
+%table
+  %thead
+    %tr
+      %th
+      %th
+      %th
+
+  %tbody
+    - @clinical_trial_visits.each do |clinical_trial_visit|
+      %tr
+        %td= link_to t('show'), clinical_trial_visit
+        %td= link_to t('edit'), edit_clinical_trial_visit_path(clinical_trial_visit)
+        %td= link_to t('destory'), clinical_trial_visit, :method => :delete, :data => { :confirm => "#{t('are_you_sure_confirmation')}" }
+
+%br
+
+= link_to t('clinical_trial_visit.create_new_button_label'), new_clinical_trial_visit_path

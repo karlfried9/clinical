@@ -1,0 +1,7 @@
+%p= link_to t('default_action.go_back'), patients_path, class: "btn btn-xs btn-primary"
+
+%h1= t('patient.edit_page_title')
+
+= render 'form'
+
+%p= link_to t('default_action.show'), @patient

@@ -1,0 +1,42 @@
+:javascript
+  var Chartkick = {"language": "fr"}
+
+= javascript_include_tag "//www.google.com/jsapi", "chartkick"
+%p
+  = link_to t("default_action.go_back"), reports_path, class: "btn btn-primary btn-xs"
+
+%h1= t('reports.clinical_trial_progress_report')
+
+.form-group
+  %label
+    = t("clinical_trial.clinical_trial")
+  %select.form-control{:name => 'clinical_trial_id', :id => 'clinical_trial_id', :onchange =>'selectClinicalTrial()'}
+    %option
+      = t("clinical_trial.select_clinical_trial")
+    - @clinical_trials.each do |ct|
+      %option{:value => ct.id, :selected => ct == @clinical_trial }
+        = ct.study_title
+
+- #@clinical_trials.each do |ct|
+- if @clinical_trial.present?
+  %hr
+  %h2
+    = @clinical_trial.study_title
+
+  - pending = @clinical_trial.expected_trial_enrollment_count - @clinical_trial.patients.count
+  - enrolled = @clinical_trial.patients.count
+  - enrollment_data = [{name: t('reports.actual_enrollments'), data: [[t('patient.patients'), enrolled]]}, {name: t('reports.enrollment_gap'), data: [[t('patient.patients'), pending]]} ]
+  %h3
+    = t('reports.expected_enrollments') +":"
+    = @clinical_trial.expected_trial_enrollment_count.to_s
+  = bar_chart enrollment_data, stacked: true, height: "80px", max: @clinical_trial.expected_trial_enrollment_count, :library => {chartArea: {left:0, width: "60%"}}
+
+  %h3= t('reports.patients_by_visit')
+
+  - patient_visit_data = PatientVisit.my(current_user).joins(:clinical_trial_visit).joins(:clinical_trial).where("clinical_trials.id = ?", @clinical_trial.id).group(:name).order("name ASC").count
+  = column_chart patient_visit_data, library: {vAxis: {format: '#', gridlines: {count: 2}}}
+
+:javascript
+  function selectClinicalTrial() {
+    window.location.href = '#{trial_progress_report_path}' + '&clinical_trial_id=' + $('#clinical_trial_id').val();
+  }

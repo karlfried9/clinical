@@ -1,0 +1,19 @@
+%p
+  = link_to t("default_action.go_back"), :root, class: "btn btn-primary btn-xs"
+
+%h1
+  = t('Reports.reports')
+
+.row
+  .col-md-6.text-center
+    %h2
+      = link_to monthly_charge_report_path do
+        %br
+          = image_tag "icon_revenue.png"
+          = t('reports.monthly_revenue_report')
+  .col-md-6.text-center
+    %h2
+      = link_to trial_progress_report_path do
+        %br
+          = image_tag "icon_progress_chart.png"
+          = t('reports.clinical_trial_progress_report')

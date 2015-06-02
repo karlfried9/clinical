@@ -1,0 +1,61 @@
+.modal.fade#paymentdlg
+  .modal-dialog
+    .modal-content
+      = simple_form_for(@payment, url: record_payment_invoices_path, method: :post) do |f|
+        .modal-header
+          %a.close{"data-dismiss" => "modal"}
+            = t("invoice.modal_dlg_close")
+
+          %h2.modal-title
+            = t("payment.payment_title")
+        .modal-body
+          %h2#clinical_name
+          .row
+            .col-sm-offset-3.col-sm-9
+              .btn-row
+                .btn-group{"data-toggle" => "buttons"}
+                  %label.btn.btn-primary.active{"onclick" => "onFull()"}
+                    = radio_button_tag :payment_type, t("payment.full_button")
+                    = t("payment.full_button")
+                  %label.btn.btn-primary{"onclick" => "onPartial()"}
+                    = radio_button_tag :payment_type, t("payment.partial_button")
+                    = t("payment.partial_button")
+          .row.padding-top
+            .col-sm-3
+              .text-right
+                %label
+                  = t("payment.amount")
+            .col-sm-9
+              .form-group
+                = f.text_field :amount, :class => "text optional form-control"
+          .row
+            .col-sm-3
+              .text-right
+                %label
+                  = t("payment.notes")
+            .col-sm-9
+              .form-group
+                = text_area_tag "comment", "", :class => "text optional form-control"
+
+          = hidden_field_tag 'invoice_id', nil
+          = hidden_field_tag 'total_amount', nil
+
+        .modal-footer
+          = button_tag t("payment.cancel"), :class => "btn btn-default", data:{:dismiss => "modal"}
+          = submit_tag t("payment.save"), class: "btn btn-success"
+
+:javascript
+  $(document).ready( function() {
+    onFull();
+  } );
+
+  function onFull()
+  {
+    $("#payment_amount").prop("readonly", true);
+    $("#payment_amount").val($("#total_amount").val())
+  }
+
+  function onPartial()
+  {
+    $("#payment_amount").prop("readonly", false);
+  }

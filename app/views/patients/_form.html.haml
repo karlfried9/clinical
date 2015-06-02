@@ -1,0 +1,46 @@
+= simple_form_for @patient, html: { class: 'form-horizontal col-md-4' } do |f|
+  - if @patient.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@patient.errors.count, t('default_message.error'))}"
+      = t('patient.error_message_saving_patient_record')
+      %ul
+        - @patient.errors.full_messages.each do |msg|
+          %li= msg
+  - if current_user.super_admin?
+    = f.association :organization, :label_method => :name, :value_method => :id
+  -else
+    = f.input :organization_id, :as => :hidden, :input_html => { :value => current_user.organization_id }
+  = f.input :salutation, collection: ["Mr.", "Mrs."]
+  = f.input :first_name
+  = f.input :last_name
+  = f.input :patient_id
+  -#= f.input :date_of_birth, as: :date, html5: true
+  = f.input :date_of_birth, as: :date_picker, input_html: { :class => "text required form-control"}, :id => "date_of_birth", :placeholder => 'dd/mm/yyyy'
+
+  = f.input :notes
+  = f.association :clinical_trial, :collection => ClinicalTrial.my(current_user), :label_method => :study_title, :value_method => :id, :input_html => {:onchange => "loadArms()"}
+  .form-group
+    %label
+      = t("simple_form.labels.clinical_trial.arm_name")
+    %select.form-control{:name => 'patient[arm_id]', :id => 'arm_id'}
+
+  = f.button :submit, class: "btn btn-success btn-lg"
+
+:javascript
+  $(document).ready(function() {
+    loadArms();
+  })
+  function loadArms() {
+    $('#arm_id').html('');
+    $.get( "#{load_arms_clinical_trials_path}" + "&id=" + $('#patient_clinical_trial_id').val(), function(data) {
+      arms = data;
+      var i = 0;
+      for (i = 0; i < arms.length; i++) {
+        $('#arm_id').append($('<option/>', {
+          value: arms[i].id,
+          text : arms[i].name,
+        }));
+      }
+    }).fail(function() {
+    });
+  }

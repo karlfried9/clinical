@@ -1,0 +1,48 @@
+Purpose of this Rail App
+=========================
+This rais application will be used by Oncologists (cancer doctors) participate in Cancer 
+drug/therapy trials to evaluate the effectiveness of a drug.  Typical use of this application is
+to record a doctor's interaction with a cancer patient where the patient is given a cancer drug
+and the patient progress is monitored over-time to see if the cancer drug being researched is better
+than other alternatives.  So at the core, the application is recording "Patient Activities"
+
+Genarally, drug trials require four participants: 
+1) The Sponsor - typically a drug company who has been researching a molecule for a long time, has done some trials on
+animals to see if it works and are ready to have trials on humans with the given disease/cancer).  Sponsors have to
+finance all the expenses for drug trials and these could be USD 10 Million or up to USD 200 Million.  The money goes to pay
+everyone who is involved, but everyone maintains strict independence from the sponsor.
+
+2) The Investigator - an independent doctor or a researcher who will independently validaet the claims of the drugs.  They
+will setup the trial, criteria to select patients, e.g., if the trial is for early stage liver cancer, 
+then the volunteers should have liver cancer Stage 1 or 2, should be adults, not pregnant and between the age of 35-55.
+The Investigator will oversee the cancerl doctors at many clinics who will be interacting with the patients.  Investigators
+will also "compile" the research data and in teh end, be responsible for the results.  So this is a big job.  Only the most
+respected doctors with a LOT of experience who are typically very senior people at big hospitals become investigators.  Trials
+typically have primary and secondary investigators
+
+3) Doctors - who are selected by the investigators to participante in the trial and who will find patients and recommend to patients
+to participate in the drug trial if it is applicable in their cases.  These doctors
+will be paid by the sponsor but will maintain 100% independence.  We do not want anyone being influenced by money when
+peoples lives and healths are the topic.  So these doctors get paid for all expenses regardless of the success of the drug
+
+3) The Cancer Patient - who will try out the drug, patients do this because they expect to that new drug being tried could 
+improve their lives or hope that the drug will help them live longer (e.g., this new drug can give you more time to live by slowing down cancer progress).
+In some cases the patients get compensated for their time, but the key motivator for cancer drug trials is an issue of living longer,
+which could be months... so its very sad...
+
+Primary User
+============
+Our user is the Doctor who sees a patient.  So they will use our app to do the following
+
+1- Enter patient Activity (e.g. patient P1 who is participating in clinical trial C2 came in today, and they were given drug X.  This activity
+costs $200 USD. And a prescription to other medication was written)
+2- Setup new patient who came in the first time, when this patient comes in for a follow up then the previous activity applies
+3- Create an invoice which "bundles" several Activities together; invoicing will then have a workflow, e.g. invoice generated, invoice sent,
+invoice paid, etc.
+4- Enter a clinical trial information for a new trial i will be running and looking for patients (also enter a new sponsor if doesn't exist in the database)
+5- Other setup tasks - setup Activity Codes and prices (like a menu in restaurant)
+
+Dev todos
+=====
+- Unique constraints on patient_id
+- Index on fields

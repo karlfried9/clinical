@@ -1,0 +1,26 @@
+= form_for(@user, :url => create_user_path, :html => { :role => 'form'}) do |f|
+  - if @user.errors.any?
+    %h2= "#{pluralize(@user.errors.count, t("default_message.error"))}"
+    = t('users.message_error_saving')
+    %ul
+      - @user.errors.full_messages.each do |msg|
+        %li= msg
+  -if @user.clinic_manager?
+    = f.hidden_field :role_id
+    = f.collection_select :organization, Organization.all.order(:name), :id, :name
+  -else
+    = f.hidden_field :role_id
+    = f.hidden_field :organization_id
+  .form-group
+    = f.label :name
+    = f.text_field :name, :autofocus => true, class: 'form-control'
+  .form-group
+    = f.label :email
+    = f.email_field :email, class: 'form-control'
+  .form-group
+    = f.label :password
+    = f.password_field :password, class: 'form-control'
+  .form-group
+    = f.label :password_confirmation
+    = f.password_field :password_confirmation, class: 'form-control'
+  = f.submit t('users.save_button'), :class => 'btn btn-primary'

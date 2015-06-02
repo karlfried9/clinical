@@ -1,0 +1,37 @@
+%p
+  = link_to t("activity.go_back"), :root, :class => 'btn btn-xs btn-primary'
+
+%h1= t('clinical_trial.clinical_trials', :default => "Clinical Trials")
+
+%table.table.table-hover
+  %thead
+    %tr
+      %th= t('clinical_trial.name', :default => "Name")
+      %th
+      %th= t('clinical_trial.sponsor', :default => "Sponsor")
+      %th= t('clinical_trial.phase', :default => "Phase")
+      %th= t('clinical_trial.start_date', :default => "Start date")
+      %th
+      -#%th
+      -#%th
+      
+  %tbody
+    - @clinical_trials.each do |clinical_trial|
+      %tr
+        %td
+          = link_to clinical_trial.study_title, clinical_trial
+        %td
+          = link_to t('clinical_trial.show'), clinical_trial, class: "btn btn-primary btn-xs"
+        %td
+          - if clinical_trial.trial_sponsor
+            = clinical_trial.trial_sponsor.name        
+        %td= clinical_trial.phase.name
+        %td= clinical_trial.start_date
+        -#%td= link_to t('clinical_trial.show'), clinical_trial
+        -#%td= link_to t('clinical_trial.edit'), edit_clinical_trial_path(clinical_trial)
+
+%br
+= will_paginate @clinical_trials,  renderer: BootstrapPagination::Rails
+%br
+
+= link_to t('clinical_trial.new_clinical_trial', :default => 'New Clinical trial'), new_clinical_trial_path, class: "btn btn-primary"

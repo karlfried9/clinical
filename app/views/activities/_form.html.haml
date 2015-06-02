@@ -1,0 +1,29 @@
+= simple_form_for(@activity) do |f|
+  = f.error_notification
+
+  .form-inputs
+    - if current_user.super_admin?
+      = f.association :organization, :label_method => :name, :value_method => :id
+    -else
+      = f.input :organization_id, :as => :hidden, :input_html => { :value => current_user.organization_id }
+    = f.input :name
+    = f.input :description
+
+    = f.association :type, :label_method => :name, :value_method => :id
+
+    .input-row
+      = f.label :category
+      = f.text_field :category_list, :style => 'min-width:300px;'
+      %br= t('activities.hint_category')
+    = f.input :billable
+    = f.input :amount
+
+    = f.input :code_type, hint: t('activities.hint_code_type')
+    = f.input :code, hint: t('activities.hint_code')
+  .form-actions
+    = f.button :submit, class: 'btn btn-success'
+
+:javascript
+  $(function() {
+    $('.input-row #activity_category_list').select2({tags:[]})
+  });

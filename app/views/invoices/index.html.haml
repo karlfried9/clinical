@@ -1,0 +1,116 @@
+.row
+  .col-md-6
+    %p
+      = link_to t("default_action.go_back"), :root, :class => 'btn btn-xs btn-primary'
+  .col-md-d{style: "padding-top: 10px;"}
+    %p.text-right
+      = link_to t('general.export_to_excel'), invoices_path(:xlsx), class: 'btn btn-primary'
+.row
+  .col-md-12
+    %h1
+      = t("invoice.invoices")
+
+.row
+  .col-md-6
+
+    %h3
+      = t("invoice.recent_invoices")
+  .col-md-6
+    .pull-right
+      .btn-group
+        = link_to t("invoice." + @status.to_s), "#", :class => "btn btn-info"
+        = link_to "#", :class => "btn btn-info dropdown-toggle", data: {toggle: "dropdown"}, :title => "Bootstrap 3 themes generator" do
+          %span.caret
+        %ul.dropdown-menu
+          %li
+            = link_to t("invoice.all"), invoices_path, :title => "Bootstrap 3 themes generator"
+
+          - @states.each do |state|
+            %li
+              = link_to t("invoice." + state.to_s), invoices_path(status: state), :title => "Bootstrap 3 themes generator"
+
+%table.table.table-hover.table-striped
+  %thead
+    %tr
+      %th #
+      %th
+        = t("invoice.created_date")
+      %th
+        = t("invoice.clinical_trial_name")
+      %th
+        = t("invoice.invoice_status")
+      %th
+        = t("invoice.amount")
+      %th
+        = t("invoice.paid")
+      %th
+        = t("invoice.actions")
+      
+  %tbody
+    - @invoices.each do |invoice|
+      %tr
+        %td= invoice.id.to_s.rjust(3, '0')
+        %td= l invoice.created_at, format: :dmy_date
+        %td= invoice.clinical_trial.study_title
+        %td= t("invoice." + invoice.status)
+        - total_amount = 0
+        - invoice.patient_activities.each do |activity|
+          - total_amount = total_amount + activity.amount
+        %td= number_to_currency(total_amount)
+        - paid_amount = 0
+        - invoice.payments.each do |payment|
+          - paid_amount = paid_amount + payment.amount
+        %td= number_to_currency(paid_amount)
+
+        = invoice_status_link invoice, total_amount - paid_amount
+
+.clearfix
+  .pull-right
+    = will_paginate @invoices, renderer: BootstrapPagination::Rails, :class => "pagination", :previous_label => "#{t("invoice.pagination_left")}", :next_label => "#{t("invoice.pagination_right")}"
+
+%hr
+%h3
+  = t("invoice.one_step_invoice")
+.row
+  .col-sm-6
+    %table.table
+      %thead
+        %tr
+          %th
+            = t("invoice.clinical_trial_name")
+          %th
+            = t("invoice.uninvoiced_activities")
+          %th
+            = t("invoice.amount")
+          %th
+            = t("invoice.actions")
+
+      %tbody
+        - @uninvoiced_clinical.each do |clinical|
+          %tr
+            %td= clinical[:name]
+            %td= clinical[:count]
+            %td= clinical[:amount]
+            %td= link_to "#{t("invoice.create_invoice")}", new_invoice_path(:clinical_trial_id => clinical[:id]), class: "btn btn-sm btn-success"
+
+%hr
+%h3
+  = t("invoice.advanced_invoice_creation")
+
+%br
+= link_to "#{t("invoice.create_invoice")}", new_invoice_path, class: "btn btn-primary"
+
+= render 'payments/form'
+
+:javascript
+  $(document).ready( function() {
+
+  } );
+
+  function onpayment(invoice_id, clinical_name, total_amount)
+  {
+    $('#invoice_id').val(invoice_id);
+    $('#clinical_name').html(clinical_name);
+    $('#total_amount').val(total_amount);
+    $("#payment_amount").val($("#total_amount").val());
+  }

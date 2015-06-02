@@ -1,0 +1,62 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    = wicked_pdf_stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
+  %body
+    %main{:role => "main"}
+      .container
+        .row
+          %h1
+            = t("invoice.invoice")
+
+          %h4.text-right
+            %b= t('invoice.invoice_number') + ": " + @invoice.id.to_s.rjust(3, '0')
+            %br=l @invoice.created_at, format: :dmy_date
+          %h3
+            = @invoice.clinical_trial.study_title
+          %table.table
+            %tbody
+              %tr
+                %td{width: '33%'}
+                  %b
+                    = t("invoice.from")
+                  %p
+                    = simple_format @invoice.clinical_trial.organization.billing_from
+                %td{width: '33%'}
+                  %b
+                    = t("invoice.to")
+                  %p
+                    = simple_format @invoice.clinical_trial.billing_to
+                %td{width: '33%'}
+                  .well.text-right
+                    %h3
+                      = t("invoice.status") + " : " + t("invoice." + @invoice.status)
+                    %br
+                      = t("invoice.total_sm") + " : " + number_to_currency(@total_amount)
+                      %br
+                      = t("invoice.paid") + " : " + number_to_currency(@paid_amount)
+
+          .row
+            .col-sm-8
+              %table.table.table-striped
+                %tr
+                  %th
+                    = t("invoice.patient_id")
+                  %th
+                    = t("invoice.activity")
+                  %th
+                    = t("invoice.amount")
+
+                - @invoice.patient_activities.each do |activity|
+                  %tr
+                    %td= activity.patient.patient_id
+                    %td= activity.patient_visit.clinical_trial_visit.name + "/" + activity.activity.name
+                    %td= number_to_currency(activity.amount)
+                %tr
+                  %td
+                  %td
+                    = t("invoice.total_bg")
+                  %td= number_to_currency @total_amount
+
+          %hr

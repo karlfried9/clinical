@@ -1,0 +1,25 @@
+%p
+  = link_to t("default_action.go_back"), :root, :class => 'btn btn-xs btn-primary'
+
+%h1= t("sponsor.sponsors", :default => "Listing Trial Sponsors");
+
+= link_to t("sponsor.new_sponsor", :default => 'New Trial sponsor'), new_trial_sponsor_path, class: "btn btn-lg btn-success"
+
+%table.table.table-hover
+  %thead
+    %tr
+      %th= t("sponsor.name", :default => "Name")
+      %th= t("sponsor.contact_info", :default => "Contact info")
+      %th
+      %th
+      %th
+      
+  %tbody
+    - @trial_sponsors.each do |trial_sponsor|
+      %tr
+        %td= trial_sponsor.name
+        %td= trial_sponsor.contact_info
+        %td= link_to t('default_action.show'), trial_sponsor
+        %td= link_to t('default_action.edit'), edit_trial_sponsor_path(trial_sponsor)
+        %td= link_to t('default_action.destroy'), trial_sponsor, :method => :delete, :data => { :confirm => "#{t('are_you_sure_confirmation')}" }
+

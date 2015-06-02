@@ -1,0 +1,468 @@
+fr:
+  activerecord:
+    models:
+      clinical_trial: Essai Clinique
+  helpers:
+    submit:
+      clinical_trial_attachment:
+        create: Ajouter une pièce jointe
+      clinical_trial_visit:
+        create: Créer une nouvelle visite-type pour l'essai clinique
+        update: Actualiser la visite
+      trial_sponsor:
+        create: Créer le nouveau Sponsor
+        update: Modifier Sponsor
+      patient_visit:
+        update: Modifier ce(tte) visite patiente
+        create: Créer une nouvelle visite patiente
+      activity:
+        create: Créer un(e) activité/acte
+        update: Modifier ce(tte) activité/acte
+
+  general:
+    year: Année
+    month: Mois
+    required_fields_hint: 'Remarque: Les champs marqués d''une * ne peuvent pas être
+      vide'
+    export_time: Moment de l'exportation
+    export_to_excel: Exporter (.xls)
+    select_date: Sélectionnez la date
+  menu:
+    home: Accueil
+    organizations: Organisations
+    sign_out: Se déconnecter
+    users: Utilisateurs
+    edit_account: Modifier votre compte
+  visitors:
+    patient_visits: Gérer les visites patients
+    view_reports: Afficher les rapports
+    create_invoice: Créer une facture
+    my_activities: Mes actes
+    my_facility: Mon organisation
+    my_patients: Mes patients
+    clinical_trials: Mes essais cliniques
+    sponsor: Mes Sponsors
+    facility_administration: Administration de l'établissement
+    add_edit_doctors: Ajouter / modifier personnel
+  users:
+    index:
+      clinic_manager: Gestionnaire de clinique
+      clinic_managers: Gestionnaires de clinique
+      new_clinic_manager: Nouveau Gentionnaire de la Clinique
+      doctor: Médecin
+      doctors: Médecins
+      new_doctor: Nouveau médecin
+      edit_user: Modifier le profil
+      doctors_and_clinic_managers: Médecins et Chef de Service
+      name: Nom
+      email: Email
+      type: Type
+    message_error_saving: Ne pas enregistrer l'utilisateur
+    save_button: Enregistrer
+    new_clinic_manager_title: Nouveau Chef de Service
+    new_doctor_title: Nouveau médecin
+    user: Utilisateur
+  show: Afficher
+  edit: Modifier
+  destory: Effacer
+  are_you_sure_confirmation: Êtes-vous sûr?
+  patient:
+    name: Nom
+    patients: Patients
+    patient: Patient
+    add_new_patient: Ajouter un nouveau patient
+    first_name: Prénom
+    last_name: Nom
+    patient_id: Identifiant Patient
+    salutation: Civilité
+    date_of_birth: Date de naissance
+    notes: Remarques
+    select_patient: Sélectionner un patient
+    error_message_saving_patient_record: Ne pas enregistrer le dossier patient
+    edit_page_title: Modifier Patient
+  clinical_trial:
+    clinical_trials: Essais cliniques
+    clinical_trial: Essai Clinique
+    name: Nom de l’essai clinique
+    description: Description
+    sponsor: Sponsor
+    phase: Phase de l’étude
+    new_clinical_trial: Nouvel essai clinique
+    start_date: Date de début
+    trial_sponsor: Sponsor
+    product_id: Identification du Produit
+    status: Statut
+    drug_name: Nom du médicament / appareil médical
+    organ: Organe
+    disease_stage: Stade de la maladie
+    study_acronym: Acronyme de l’étude
+    official_study_title: Titre officiel de l’étude
+    secondary_ids: Identifiant secondaire de l’étude (si’il existe)
+    enrollment_begin_date: Date de début de l'enrôlement
+    enrollment_end_date: Date de fin d'enrôlement patients
+    expected_trial_enrollment_count: Effectif total prévu
+    primary_completion_date: Date d'achèvement primaire
+    study_completion_date: Date de clôture de l’étude
+    masking: Masque de l’étude
+    overall_study_status: Statut de l'essai
+    recruitment_status_at_facility: Statut du site sur le recrutement des patients
+    principal_investigator: Nom de l'investigateur principal
+    clinical_assistant: ARC
+    other_information: Autres informations
+    editing_clinical_trial: Modifier essais cliniques
+    select_clinical_trial: Sélectionner l'essai clinique
+    show: Visite
+    edit: Modifier
+    destroy: Effacer
+    delete_this_clinical_trial: Effacer cet essai clinique
+    go_back: Retour
+    visit:
+      should_occur: Devrait avoir lieu
+      days: Jours
+      within_plus_minus_days: Fenêtre de visite (+/- de jours)
+    billing_to_address: Facture à (adresse postale)
+    billing_to_email: Facturer à l'adresse email
+    add_sponsor: Ajouter un Sponsor pour les essais cliniques
+    attachments:
+      attachment: Documents et fichiers joints
+      attachment_error_select_file: Sélectionner un fichier à télécharger et le joindre à cet essai clinique
+      upload_selected_file: Télécharger le fichier sélectionné
+      download: Télécharger
+      name: Nom du document
+      size: Taille du fichier
+      updated_at: Date de mise à jour
+    hint:
+      select_or_add_sponsor: Sélectionnez le Sponsor. S'il n'existe pas dans la liste, veuillez le créer à partir de la page d'accueil
+      expected_enrollment: Combien de patients - au total - vous attendez-vous à recruter pour cet essai clinique, au sein de votre centre?
+      clinical_assistant_contant_info: Nom et Contact (email / numéro de téléphone)
+    page_lead: Créer un nouvel essai clinique à l’aide de cet ecran. Il contient les champs essentiels de l'essai. Vous pouvez cependant ajouter les "Bras", les protocoles de visites, et les documents en pdf relatifs à cet essai, en allant sur l'onglet "Montrer"
+    flash_successfully_created: Cette visite a été créée avec succès
+    flash_successfully_updated: Cette visite a été actualisée avec succès
+    flash_successfully_deleted: Cette visite a été effacée avec succès
+  patient_activity:
+    patient_activities: Activités patients
+    new_patient_activity: Nouvelle activité du patient
+    patient: Patient
+    clinic_trial: Essai clinique
+    activity_date: Date de l'activité
+    body_part: Partie du corps
+    prescription_written: Ordonnance écrite
+    prescription_notes: Notes sur ordonnance
+    amount_charged: Montant facturé
+  sponsor:
+    sponsors: Liste des sponsors d'essais
+    new_sponsor: Nouveau sponsor de l'essai
+    name: Nom
+    contact_info: Coordonnées
+    error_saving_message: Ne pas enregistrer le Sponsor
+    editing_sponsor_title: Modifier le Sponsor de l'essai clinique
+  simple_form:
+    labels:
+      activity:
+        amount: Montant
+        billable: Facturable?
+        category: Catégorie
+        name: Nom
+      patient:
+        salutation: Civilité
+        first_name: Prénom
+        last_name: Nom
+        patient_id: Identité Patient
+        date_of_birth: Date de naissance
+        notes: Remarques
+        clinical_trial: Enrôlement essai clinique
+      clinical_trial:
+        organization: Organisation
+        protocol_id: Identifiant du protocole de l’étude
+        trial_ID: Trial ID
+        name: Nom
+        arm_name: Bras de l'essai
+        phase: Phase de l’étude
+        ct_status: Statut de l’étude
+        drug_name: Nom du médicament / de l’appareil médical à tester
+        organ: Organe
+        disease_stage: Stade de la maladie
+        trial_sponsor: Sponsor de l'essai clinique
+        principal_investigator: Nom de l'investigateur principal
+        expected_trial_enrollment_count: Effectif total prévu
+        clinical_assistant: Medicin Adjoint
+        other_information: Autres informations
+        start_date: Date de début de l’essai clinique
+        bill_to_email: Adresse email de facturation
+        billing_to: Adresse postale de facturation
+        enrollment_begin_date: Date de début d’enrôlement des patients
+        enrollment_end_date: Date de clôture d’enrôlement des patients
+        masking: Masque de l’étude
+        official_study_title: Titre officiel de l’étude
+        overall_study_status: Stade de l’étude
+        primary_completion_date: Date effective de la fin de l’étude
+        recruitment_status_at_facility: Stade de l’enrôlement dans votre centre
+        secondary_ids: Identifiant secondaire (s’il existe)
+        study_acronym: Acronyme de l’étude
+        study_completion_date: Date théorique de la fin de l’étude
+        study_title: Nom de l’étude
+      patient_activity:
+        patient: Patient
+        clinic_trial: Essai clinique
+        activity_date: Date de l'activité
+        body_part: Partie du corps
+        prescription_written: Ordonnance écrite
+        prescription_notes: Notes sur ordonnance
+        amount_charged: Montant facturé
+      trial_sponsor:
+        name: Nom du Sponsor
+        contact_info: Coordonnées
+      clinical_trial_visit:
+        name: Nom de la visite
+        Description: Description
+        visit_type: Objectif de la visite
+        after_visit: Nom de la visite précédente
+        visit_format: Format de la visite
+      clinical_trial_attachment:
+        content: Rechercher le document
+      invoice:
+        clinical_trial: Essai clinique
+  invoice:
+    invoice: Facture
+    invoice_number: Numéro de facture
+    step1_message: Étape 1 - Sélectionner l'essai clinique
+    step2_message: Étape 2 - Choisir les dates
+    step3_message: Étape 3 - Enregistrer les actes faits
+    step4_message: Étape 4 - Informations de facturation
+    your_trial: Vos essais cliniques
+    all_dates: Toutes les dates
+    specific_dates: Les dates spécifiques
+    from: De
+    to: À
+    select_all: Tout Sélectionner
+    deselect_all: Tout Déselectionner
+    notes: Commentaires
+    create_invoice: Créer une facture
+    edit_invoice: Modifier la facture
+    show: Montrer
+    back: Retour
+    invoices: factures
+    advanced_invoice_creation: Création de facture - Avancée
+    recent_invoices: Factures Récentes
+    created_date: Date de création
+    invoice_status: Statut de la facture
+    amount: Montant
+    actions: Actes
+    view: Vue
+    edit: Modifier
+    delete: Effacer
+    confirm_message: Etes-vous sûr?
+    pagination_left: '<<'
+    pagination_right: '>>'
+    one_step_invoice: Création de facture - en une etape
+    clinical_trial_name: Nom essai clinique
+    uninvoiced_activities: Activités non facturés
+    pdf: PDF
+    total_sm: Total
+    status: Statut
+    patient_id: Identite Patient
+    activity: Activité
+    total_bg: Total
+    add_comment: Ajouter cn commentaire
+    modal_dlg_close: ×
+    write_comment_msg: Ecrire votre commentaire
+    draft: Version Brouillon
+    issued: Emise
+    sent: expédiée
+    archived: archivée
+    paid: Payé
+    partially_paid: partiellement payée
+    cancelled: Annulée
+    all: Toutes
+    issue: Emise
+    send: Envoyer
+    archive: Archiver
+    record_payment: Enregistrer Paiement
+    cancel: Annuler
+    error_message: Ne pas enregistrer la facture
+    payment_recieved: Paiement reçu
+    comments: Commentaire(s)
+    no_unbilled_activities: Aucun acte non facturé. Tous les actes et les visites sont été facturés.
+  payment:
+    payment_title: Enregistrer le paiement
+    full_button: Complet
+    partial_button: Partiel
+    amount: Montant
+    notes: Remarques
+    save: Enregistrer
+    cancel: Annuler
+    edit_payment_title: Modifier le paiement
+    listing_payments_title: Liste des paiements
+  arm:
+    arm: Bras
+    arms: Les bras
+    add_arm: Ajouter un nouveau
+    arm_name: Nom du bras
+    description: Description
+    save: Enregistrer
+    cancel: Annuler
+    manage_arms: Gérer les bras
+  visit:
+    visit_schedule: Enregistrer le calendrier de visites théorique
+    view: Revoir la visite
+    edit: Modifier la visite
+    add_visit: Ajouter une nouvelle visite
+    edit_visit: Modifier la visite
+    name: Nom de la visite
+    hint: (e.g., Visite d'initiation, Première visite, Dernière visite, etc.)
+    when: Quand
+    activity_count: Nombre d’actes pour la visite
+    total_amount: Coût de la visite
+    study_dates: Dates
+    status: Statut de la visite
+    save: Enregistrer
+    cancel: Annuler
+    manage_visits: Gestion du calendrier de visites théoriques
+    should_occur: La visite devrait avoir lieu ...
+    action: Actes
+    patient_visit: Visite Patient
+    visit_format: Format de la visite
+    visit_type: Objectif de la visite
+    from: À partir
+    to: À
+    completed: Terminé
+    record_visit: Enregistrer la visite
+    warning: Attention
+    outside_message: Attention - la visite à enregistrer est en dehors de la fenêtre de dates du protocole ... S'il vous plaît enregistrer une nouvelle date / assurer vous de la conformité de celle ci avant l'enregistrement
+    description: Description
+    add_another_activity: Ajouter un autre acte / activité
+    schedule: Calendrier
+    reschedule: Reporter
+    scheduled: Prévu
+    not_scheduled: Non planifiée
+    create_new: Nouvelle visite patient
+    for: pour
+    activities_during_visit: Activités/Actes durant la visite
+    date_of_most_recent_visit: Date de la dernière visite
+    name_of_most_recent_visit: Plus récente visite
+  activity:
+    add_more: Ajouter un autre acte / activité
+    name: Nom
+    amount: Montant
+    activity: Activité(s)
+    category: Catégorie
+    action: Action
+    add: Ajouter
+    billable: Facturable?
+    activity_performed: Activité réalisée?
+    save: Enregistrer
+    cancel: Annuler
+    editing_activity: Modifier l'activité
+    show: Visite
+    go_back: Retour
+    type: Type
+    flash_successfully_created: L'activité / l'acte a été créé avec succès.
+    flash_successfully_updated: L'activité / l'acte a été mis à jour avec succès.
+    flash_successfully_deleted: L'activité / l'acte a été effacé avec succès.
+  clinical_trial_type:
+    enrollment: Enrôlement Patient
+    follow_up: Suivi
+    early_termination: Arrêt anticipé
+    end_of_study: Fin de l'étude
+  clinical_trial_visit_format:
+    in_person: En personne
+    phone_call: Appel téléphonique
+    other: Autre
+  disease_stage:
+    early_form: Stade précoce
+    localized: Localisé
+    early_locally_advanced: Précoce, localement avancé
+    late_locally_advanced: Tardif, localement avancé
+    metastasized: Métastasé
+  study_status:
+    study_not_yet_recruiting: Pas encore recruté
+    study_recruiting: Recrutement
+    study_enrolling_by_invitation: Inscription sur invitation
+    study_active_not_recruiting: Essai actif mais sans recrutement de patients (étude en cours)
+    study_completed: Terminée (étude conclue normalement)
+    study_suspended: Suspendu (potentiellement pourraient être reprise)
+    study_terminated: Terminée (prématurément interrompue, patients ne sont plus examinés / traité)
+    study_withdrawn: Retirée (étude interrompue avant l'inscription du premier participant)
+  clinical_trial_masking:
+    open: Ouvert
+    single: Unique
+    blind: En simple aveugle
+    double_blind: En double aveugle
+  activity_type:
+    procedure: Procédure
+    diagnosis: Diagnostique
+    drug: Médicament
+    other: Autre
+  clinical_trial_phase:
+    phase1: Phase I
+    phase2: Phase IIa
+    phase3: Phase IIb
+    phase4: Phase III
+  clinical_trial_status:
+    created: Crée
+    being_selected: Sélectionné
+    selection_complete: Sélection complète
+    open_for_patient_enrollment: Ouverte pour le recrutement des patients
+    closed_for_enrollment: Fermé pour l'enrôlement de patients
+    on_hold: En attente
+  clinical_trial_organ:
+    head: tête
+    eyes: yeux
+    neck: cou
+    lungs: poumons
+  monthly_charge_report:
+    report_title: Rapport - Cout mensuel
+    total_since_start: Total depuis le lancement
+    monthly_charge_amount: Montant facturable
+    report_description: Ce rapport montre les actes facturables pour un essai clinique par année / mois
+    billable_amount: Montant facturable
+  clinical_trial_arm:
+    go_back: Retour
+  clinical_trial_visits:
+    go_back: Retour
+    listing: Liste des visites de l'essai clinique
+    manage: Gérer les visites
+    create_visit_for: Créer une visite pour ...
+  default_action:
+    edit: Modifier
+    go_back: Retour
+    show: Montrer
+    destroy: Effacer
+    search: recherche
+  default_message:
+    error: erreur
+  organization:
+    editing_organization: Modifier l'organisation
+    listing: Liste des organisations
+    create_new: Nouvelle Organisation
+  activities:
+    already_exists_alert: Cet acte existe déjà pour cette visite. Il ne peut pas être ajouté une seconde fois
+    listing_activities_page_title: Liste des activités/actes
+    description: Le tableau ci-dessous montre tous les actes effectués dans votre établissement qui seront disponibles pour les dates de visites théoriques et réelles de l'essai clinique. Les montants peuvent être ajustés pour chaque essai clinique basé sur des taux négociés avec les Sponsors.
+    add_new_activity_button: Ajouter une nouvelle acte
+    new_activity: Nouvelle activité/acte
+    hint_category: Définissez une/des catégorie(s) pour organiser certains actes par thématique. Tapez un mot-catégorie et validez. Plusieurs catégories peuvent être ajoutées (facultatif)
+    hint_code_type: Entrez le code de l'acte pour l'identifier, si vous avez ledit code (facultatif)
+    hint_code: Code de l'acte (facultatif)
+  description: Description
+  clinical_trial_visit:
+    editing: Modifier la visite
+    create_new_button_label: Nouvelle visite
+    create_new_page_title: Nouvelle visite
+    how_many_days: Nombre de jours apres la visite précédente
+    offset_description: Certains essais cliniques nécessitent une sequence precise de visites. Vous pouvez utiliser les menus ci-dessous pour créer les visites inter-dépendantes (par exemple, la visite numéro 1 a lieu 30 jours après la visite d’enrôlement, à +/- 5 jours
+  Reports:
+    reports: Rapports
+  reports:
+    monthly_revenue_report: Rapport - Recette mensuelle
+    clinical_trial_progress_report: Rapport sur les progrès de l'essai clinique
+    expected_enrollments: Enrôlement attendu
+    actual_enrollments: Enrôlement à date
+    enrollment_gap: Gap d'enrôlement
+    patients_by_visit: Patients par stade de visite
+  patient_visit:
+    page_title_patient_visits: Visite-patient
+    page_lead: Vous pouvez afficher l'état des visites patients, pour un essai clinique particulier. Sélectionnez d'abord un essai clinique, puis sélectionnez un patient dans la liste déroulante. Cette liste ne contient que les patients qui sont inscrits dans ledit essai clinique
+    pick_schedule_date: Choisissez une date de rendez-vous pour une visite-patient
+  alerts:
+    access_denied: Accès refusé

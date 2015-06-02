@@ -1,0 +1,35 @@
+%h1= t("patient_activity.patient_activities", :default => "Patient Activities")
+
+= link_to t("patient_activity.new_patient_activity", :default => 'New Patient activity'), new_patient_activity_path, class: "btn btn-primary"
+%br
+
+%table.table
+  %thead
+    %tr
+      %th= t("patient_activity.patient", :default => "Patient")
+      %th= t("patient_activity.clinic_trial", :default => "Clinical trial")
+      %th= t("patient_activity.activity_date", :default => "Activity date")
+      %th= t("patient_activity.body_part", :default => "Body part")
+      %th= t("patient_activity.prescription_written", :default => "Prescription written")
+      %th= t("patient_activity.prescription_notes", :default => "Prescription notes")
+      %th= t("patient_activity.amount_charged", :default => "Amount charged")
+      %th
+      %th
+      %th
+      
+  %tbody
+    - @patient_activities.each do |patient_activity|
+      %tr
+        %td= patient_activity.patient.patient_id
+        %td= patient_activity.clinical_trial.name
+        %td= patient_activity.activity_date
+        %td= patient_activity.body_part
+        %td= patient_activity.prescription_written
+        %td= patient_activity.prescription_notes
+        %td= patient_activity.amount_charged
+        %td= link_to 'Show', patient_activity
+        %td= link_to 'Edit', edit_patient_activity_path(patient_activity)
+        %td= link_to 'Destroy', patient_activity, :method => :delete, :data => { :confirm => "#{t('are_you_sure_confirmation')}" }
+
+%br
+

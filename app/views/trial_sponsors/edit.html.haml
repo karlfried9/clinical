@@ -1,0 +1,8 @@
+%p
+  = link_to t("default_action.go_back"), trial_sponsors_path, :class => 'btn btn-xs btn-primary'
+
+%h1= t('sponsor.editing_sponsor_title')
+
+= render 'form'
+
+= link_to t('show'), @trial_sponsor

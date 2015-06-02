@@ -1,0 +1,27 @@
+%p#notice= notice
+
+= link_to t('default_action.go_back'), activities_path, :class => 'btn btn-xs btn-primary'
+%h1
+  = @activity.name
+%p
+  %b= t("activity.type") + ":"
+  = @activity.type.name
+%p
+  %b= t("simple_form.labels.activity.code") + ":"
+  = @activity.code
+%p
+  %b= t("simple_form.labels.activity.code_type") + ":"
+  = @activity.code_type
+
+%p
+  %b= t("activity.billable")
+  - if @activity.billable
+    %span.glyphicon.glyphicon-ok{"aria-hidden" => "true"}
+%p
+  %b= t('activity.amount') + ":"
+  = number_to_currency @activity.amount
+%p
+  %b Description:
+  = @activity.description
+
+= link_to t('edit'), edit_activity_path(@activity), class: 'btn btn-success'

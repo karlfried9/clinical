@@ -1,0 +1,106 @@
+%p
+  = link_to "#{t("invoice.back")}", invoices_path, class: "btn btn-primary btn-xs"
+
+%h1
+  = t("invoice.invoice")
+%p#notice= notice
+
+.col-sm-offset-4.col-sm-4
+  .text-center
+    .btn-group
+      = invoice_status_button @invoice
+.col-sm-offset-4
+  .text-right
+    = link_to "#{t("invoice.pdf")}", generate_pdf_invoice_path(@invoice), class: "btn btn-primary", data: { disable_with: "Generating..." }
+
+.row
+  .col-sm-8
+    .text-left
+      %h3
+        = @invoice.clinical_trial.study_title
+      %h3
+        %b= t('invoice.invoice_number') + ": " + @invoice.id.to_s.rjust(3, '0')
+      .row.well
+        .col-sm-6
+          %h3= t("invoice.from")
+          %p
+            = simple_format @invoice.clinical_trial.organization.billing_from
+        .col-sm-6
+          %h3= t("invoice.to")
+          %p
+            = simple_format @invoice.clinical_trial.billing_to
+  .col-sm-4
+    .text-right
+      %h1
+        = t("invoice.status") + " : "
+        %b= t("invoice." + @invoice.status)
+      %h2
+        = t("invoice.total_sm") + " : " + number_to_currency(@total_amount)
+      %h3
+        = t("invoice.paid") + " : " + number_to_currency(@paid_amount)
+
+.row
+  .col-sm-8
+    %table.table.table-striped
+      %thead
+        %tr
+          %th
+            = t("invoice.patient_id")
+          %th
+            = t("invoice.activity")
+          %th
+            = t("invoice.amount")
+
+      %tbody
+        - @invoice.patient_activities.each do |activity|
+          %tr
+            %td= activity.patient.patient_id
+            %td= activity.patient_visit.clinical_trial_visit.name + "/" + activity.activity.name
+            %td= number_to_currency(activity.amount)
+        %tr
+          %td
+          %td
+            = t("invoice.total_bg")
+          %td= number_to_currency @total_amount
+
+%hr
+
+
+%h2= t('invoice.comments')
+= button_tag "#{t("invoice.add_comment")}", class: "btn btn-success", data: {toggle: "modal", target: "#commentdlg"}
+- @invoice.comments.recent.all.each do |comment|
+  %blockquote
+    = l comment.created_at, format: :long
+    %em= simple_format(comment.comment).html_safe
+
+.modal.fade#commentdlg
+  .modal-dialog
+    .modal-content
+      = form_tag add_comment_invoice_path(@invoice) do |f|
+        .modal-header
+          %a.close{"data-dismiss" => "modal"}
+            = t("invoice.modal_dlg_close")
+
+          %h4.modal-title
+            = t("invoice.write_comment_msg")
+        .modal-body
+
+          = text_area_tag "comment", "", :class => "text optional form-control"
+
+        .modal-footer
+          = submit_tag "#{t("invoice.add_comment")}", class: "btn btn-success"
+
+= render 'payments/form'
+
+:javascript
+  $(document).ready( function() {
+
+  } );
+
+  function onpayment()
+  {
+    $('#invoice_id').val("#{@invoice.id}");
+    $('#clinical_name').html("#{@invoice.clinical_trial.study_title}");
+    $('#total_amount').val("#{@total_amount - @paid_amount}");
+    $("#payment_amount").val($("#total_amount").val());
+  }

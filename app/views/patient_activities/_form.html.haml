@@ -1,0 +1,16 @@
+= simple_form_for @patient_activity, html: { class: 'form-horizontal col-md-4' } do |f|
+  - if @patient_activity.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@patient_activity.errors.count, "error")} prohibited this patient_activity from being saved:"
+      %ul
+        - @patient_activity.errors.full_messages.each do |msg|
+          %li= msg
+
+  = f.association :patient, label_method: :patient_id
+  = f.association :clinical_trial
+  = f.input :activity_date, as: :date, html5: true 
+  = f.input :body_part
+  = f.input :prescription_written
+  = f.input :prescription_notes
+  = f.input :amount_charged
+  = f.button :submit, class: "btn btn-success btn-lg"

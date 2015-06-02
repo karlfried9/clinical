@@ -1,0 +1,39 @@
+- if @clinical_trial.present?
+  - enrollment_visit_schedule = @clinical_trial.visits.first.get_patient_visit_schedule(@patient)
+  - enrollment_visit = @clinical_trial.visits.first.get_patient_visit(@patient)
+  -@clinical_trial.visits.each_with_index do |visit, index|
+    - patient_visit = visit.get_patient_visit(@patient)
+    - patient_visit_schedule = visit.get_patient_visit_schedule(@patient)
+    %tr{:id => "visit#{visit.id}"}
+      %td
+        = visit.name
+      %td
+        = (t("visit.from") + ": " + l(@clinical_trial.enrollment_begin_date) + " " + t("visit.to") + ": " + l(@clinical_trial.enrollment_end_date)) if index == 0
+        = from_to(enrollment_visit, visit).html_safe if index != 0
+      - if patient_visit.present?
+        %td
+          = t("visit.completed") + ": " + l(patient_visit.recorded_date)
+        %td
+          %a.btn.btn-primary{:href => show_visit_patient_visits_path(@patient, visit)}
+            = t("visit.view")
+        %td
+          %a.btn.btn-primary{:href => edit_visit_patient_visits_path(@patient, visit)}
+            = t("visit.edit")
+      - elsif patient_visit_schedule.present?
+        %td
+          = t("visit.scheduled") + ": " + l(patient_visit_schedule.schedule_date)
+        %td
+          %button.btn.btn-primary{:id => "btn_schedule_visit"+visit.id.to_s, :onclick=>"addEditSchedule(#{visit.id})"}
+            = t("visit.reschedule")
+        %td
+          %a.btn.btn-primary{:href => record_visit_patient_visits_path(@patient, visit)}
+            = t("visit.record_visit")
+      - else
+        %td
+          = t("visit.not_scheduled") + ":"
+        %td
+          %button.btn.btn-primary{:id => "btn_schedule_visit"+visit.id.to_s, :onclick=>"addEditSchedule(#{visit.id})"}
+            = t("visit.schedule")
+        %td
+          %a.btn.btn-primary{:href => record_visit_patient_visits_path(@patient, visit)}
+            = t("visit.record_visit")

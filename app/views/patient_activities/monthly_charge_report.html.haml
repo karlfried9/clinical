@@ -1,0 +1,55 @@
+:javascript
+  var Chartkick = {"language": "fr"}
+
+= javascript_include_tag "//www.google.com/jsapi", "chartkick"
+
+%p
+  = link_to t("default_action.go_back"), reports_path, class: "btn btn-primary btn-xs"
+
+%h1
+  = t("monthly_charge_report.report_title")
+.lead
+  = t('monthly_charge_report.report_description')
+
+.form-group
+  %label
+    = t("clinical_trial.clinical_trial")
+  %select.form-control{:name => 'clinical_trial_id', :id => 'clinical_trial_id', :onchange =>'selectClinicalTrial()'}
+    %option
+      = t("clinical_trial.select_clinical_trial")
+    - @clinical_trials.each do |ct|
+      %option{:value => ct.id, :selected => ct == @clinical_trial }
+        = ct.study_title
+
+- #@clinical_trials.each do |ct|
+- if @clinical_trial.present?
+  %h2
+    = t("clinical_trial.clinical_trial")
+    = @clinical_trial.study_title
+  - result = @connection.exec_query(@query.gsub('?'){@clinical_trial.id})
+  %h3
+    = t("monthly_charge_report.total_since_start") + ":"
+    = number_to_currency PatientVisit.joins(:activities).where('patient_visits.clinical_trial_id = ? and patient_activities.billable = true and patient_activities.performed = true', @clinical_trial.id).sum(:amount)
+
+  = column_chart PatientVisit.joins(:activities).where('patient_visits.clinical_trial_id = ? and patient_activities.billable = true and patient_activities.performed = true', @clinical_trial.id).group_by_month(:recorded_date, format: "%m/%Y").sum(:amount), discrete: true
+  %table.table.table-bordered{style: "background-color: white"}
+    %tr
+      %th 
+        = t("general.year")
+      %th 
+        = t("general.month")
+      %th 
+        = t("monthly_charge_report.billable_amount")
+    - result.each do |r|  
+      %tr
+        %td
+          = r['year_charged']
+        %td
+          = r['month_charged']
+        %td
+          = number_to_currency r['total_charged']
+
+:javascript
+  function selectClinicalTrial() {
+    window.location.href = '#{monthly_charge_report_path}' + '&clinical_trial_id=' + $('#clinical_trial_id').val();
+  }

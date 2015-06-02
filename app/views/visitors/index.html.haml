@@ -1,0 +1,81 @@
+- if user_signed_in?
+  .container
+    .row.well.main-well
+      .col-md-4.text-center
+        =link_to patient_visits_path do
+          .thumb
+            = image_tag "icon_patient_visits.png"
+            .head
+              = t('visitors.patient_visits', :default => "Patient Visits")
+      .col-md-4.text-center
+        = link_to reports_path do
+          .thumb
+            = image_tag "icon_reports_statistics.png"
+            .head
+              = t('visitors.view_reports', :default =>"View Reports")
+      .col-md-4.text-center
+        = link_to invoices_path do
+          .thumb
+            = image_tag "icon_invoices.png"
+            .head
+              = t('visitors.create_invoice', :default =>"Create Invoices")
+    .row
+      .row.text-center{style: "margin-top: 100px; background-color: white; color: grey; margin-bottom: 51px;"}
+        .section-header
+          = t("visitors.facility_administration", :default => "Facility Administration")
+      .row.text-center
+        .row
+
+          .col-md-2.text-center
+            = link_to patients_path do
+              .thumb
+                = image_tag "icon_patients.png", class: "small-thumbs"
+                .head-sm
+                  = t('visitors.my_patients', :default => 'My Patients')
+          .col-md-2.text-center
+            = link_to activities_path do
+              .thumb
+                = image_tag "icon_activities.png", class: "small-thumbs"
+                .head-sm
+                  = t('visitors.my_activities', :default => 'Activities')
+          
+          .col-md-2.text-center
+            = link_to clinical_trials_path do
+              .thumb
+                = image_tag "icon_clinical_trial.png", class: "small-thumbs"
+                .head-sm
+                  = t('visitors.clinical_trials', :default => "Clinical Trials")
+          .col-md-2.text-center
+            = link_to trial_sponsors_path do
+              .thumb
+                = image_tag "icon_sponsor.png", class: "small-thumbs"
+                .head-sm
+                  = t('visitors.sponsor', :default => "Sponsor")
+          .col-md-4.text-center
+            = link_to users_path do
+              .thumb
+                = image_tag "icon_clinic.png", class: "small-thumbs"
+                .head-sm
+                  = t('visitors.my_facility', :default =>"My Facility")
+                = t('visitors.add_edit_doctors', :default =>"Add/edit doctors")
+- else
+  .container-fluid.login-page
+    .authform
+      = image_tag('banner.gif')
+
+      = form_for(@resource, :url => user_session_path, :html => { :role => 'form'}) do |f|
+        %h3= t('devise.sessions.new.sign_in', :default => 'Sign in')
+        .form-group
+
+          = link_to t('devise.registrations.new.sign_up', :default => 'Sign up'), new_user_registration_path, class: 'right'
+          = f.label :email
+          = f.email_field :email, :autofocus => true, class: 'form-control'
+        .form-group
+          = link_to t('devise.passwords.new.forgot_your_password'), new_user_password_path, class: 'right'
+          = f.label :password
+          = f.password_field :password, class: 'form-control'
+        = f.submit t('devise.sessions.new.sign_in', :default => 'Sign in'), :class => 'button right'
+        .checkbox{:style => "width:150px"}
+          %label
+            = f.check_box :remember_me
+            = f.label :remember_me

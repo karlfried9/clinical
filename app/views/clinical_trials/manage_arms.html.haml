@@ -1,0 +1,83 @@
+%p= link_to t('clinical_trial_arm.go_back'), clinical_trial_path(@clinical_trial), class: 'btn btn-primary btn-xs'
+
+%h1= t("arm.manage_arms")
+%h2= t("clinical_trial.clinical_trial") + ': ' + @clinical_trial.study_title
+
+.row
+  .col-sm-12
+    %table.table
+      %thead
+        %tr
+          %th
+            = t("arm.arm_name")
+          %th
+            = t("arm.description")
+          %th
+          %th
+
+      %tbody
+        - @clinical_trial.arms.each do |arm|
+          %tr
+            %td
+              = arm.name
+            %td
+              = arm.description
+            %td
+              = link_to t("default_action.edit"), '' ,data: {toggle: "modal", target: "#editdlg_#{arm.id}"}
+            %td
+              = link_to t("default_action.destroy"), destroy_arm_path(@clinical_trial, arm), :method => :post, :data => { :confirm => "#{t('are_you_sure_confirmation')}"}
+
+          .modal.fade{:id => "editdlg_#{arm.id}"}
+            .modal-dialog
+              .modal-content
+                = form_tag update_arm_path(@clinical_trial, arm) do |f|
+                  .modal-header
+                    %a.close{"data-dismiss" => "modal"}
+                      = "x"
+
+                    %h4.modal-title
+                      %b
+                        = t("arm.add_arm", :default => "Add Arm")
+                  .modal-body
+                    %p
+                      %b
+                        = t("clinical_trial.clinical_trial", :default => "Clinical Trial") + " " + @clinical_trial.study_title
+                    = hidden_field_tag "arm[id]", arm.id
+                    .form-group
+                      = label_tag t("arm.arm_name")
+                      = text_field_tag "arm[name]", arm.name, :class => "text optional form-control"
+                    .form-group
+                      = label_tag t("arm.description", :default => "Description")
+                      = text_area_tag "arm[description]", arm.description, :class => "text optional form-control"
+
+                  .modal-footer
+                    = button_tag "#{t('arm.cancel', :default => 'Cancel')}", class: "btn btn-cancel", data: {:dismiss => "modal"}
+                    = submit_tag "#{t("arm.save", :default => "Save")}", class: "btn btn-success"
+
+    = button_tag "#{t('arm.add_arm', :default => 'Add Arm')}", class: "btn btn-success", data: {toggle: "modal", target: "#adddlg"}
+
+.modal.fade#adddlg
+  .modal-dialog
+    .modal-content
+      = form_tag add_arm_clinical_trial_path(@clinical_trial) do |f|
+        .modal-header
+          %a.close{"data-dismiss" => "modal"}
+            = "x"
+
+          %h4.modal-title
+            %b
+              = t("arm.add_arm", :default => "Add Arm")
+        .modal-body
+          %p
+            %b
+              = t("clinical_trial.clinical_trial") + " " + @clinical_trial.study_title
+          .form-group
+            = label_tag t("arm.arm_name", :default => "Name")
+            = text_field_tag "arm[name]", "", :class => "text optional form-control"
+          .form-group
+            = label_tag t("arm.description", :default => "Description")
+            = text_area_tag "arm[description]", "", :class => "text optional form-control"
+
+        .modal-footer
+          = button_tag "#{t("arm.cancel", :default => "Cancel")}", class: "btn btn-cancel", "data-dismiss" => "modal"
+          = submit_tag "#{t("arm.save", :default => "Save")}", class: "btn btn-success"

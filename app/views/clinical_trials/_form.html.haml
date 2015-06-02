@@ -1,0 +1,63 @@
+.row
+  .lead
+    = t('clinical_trial.page_lead')
+  = t('general.required_fields_hint')
+.row
+  .col-md-6
+    = simple_form_for @clinical_trial, html: { class: 'form-horizontal' } do |f|
+      - if @clinical_trial.errors.any?
+        #error_explanation
+          %h2= "#{pluralize(@clinical_trial.errors.count, "error")} prohibited this clinical_trial from being saved:"
+          %ul
+            - @clinical_trial.errors.full_messages.each do |msg|
+              %li= msg
+      - if current_user.super_admin?
+        = f.association :organization, :label_method => :name, :value_method => :id
+      -else
+        = f.input :organization_id, :as => :hidden, :input_html => { :value => current_user.organization_id }
+      = f.association :trial_sponsor, hint: t('clinical_trial.hint.select_or_add_sponsor')
+      = f.input :protocol_id
+      = f.input :study_title, class: "form-control"
+      <!--=f.input :arm-->
+      = f.association :phase, :label => t("clinical_trial.phase"), :value_method => :id
+      = f.association :ct_status, :label_method => :name, :value_method => :id
+      = f.input :drug_name
+      = f.association :organ, :label_method => :name, :value_method => :id
+      = f.association :disease_stage, :label_method => :name, :value_method => :id
+      = f.input :study_acronym
+      = f.input :official_study_title
+      = f.input :secondary_ids
+      -#= f.input :start_date, as: :date, html5: :true
+      = f.input :start_date, as: :date_picker, input_html: { :class => "text required form-control"}, :id => "start_date", :placeholder => t('general.select_date')
+
+      -#= f.input :enrollment_begin_date, as: :date, html5: :true
+      = f.input :enrollment_begin_date, as: :date_picker, input_html: { :class => "text required form-control"}, :id => "enrollment_begin_date", :placeholder => t('general.select_date')
+
+      -#= f.input :enrollment_end_date, as: :date, html5: :true
+      = f.input :enrollment_end_date, as: :date_picker, input_html: { :class => "text required form-control"}, :id => "enrollment_end_date", :placeholder => t('general.select_date')
+
+      = f.input :expected_trial_enrollment_count, hint: t('clinical_trial.hint.expected_enrollment')
+      -#= f.input :primary_completion_date, as: :date, html5: :true
+      = f.input :primary_completion_date, as: :date_picker, input_html: { :class => "text required form-control"}, :id => "primary_completion_date", :placeholder => t('general.select_date')
+
+      -#= f.input :study_completion_date, as: :date, html5: :true
+      = f.input :study_completion_date, as: :date_picker, input_html: { :class => "text required form-control"}, :id => "study_completion_date", :placeholder => t('general.select_date')
+
+      = f.association :masking, :label_method => :name, :value_method => :id
+      = f.association :overall_study_status, :label_method => :name, :value_method => :id
+      = f.association :recruitment_status_at_facility, :label_method => :name, :value_method => :id
+
+      = f.input :principal_investigator
+      = f.input :clinical_assistant, hint: t('clinical_trial.hint.clinical_assistant_contant_info')
+      = f.input :other_information
+      = f.input :billing_to, as: :text, :label => t('clinical_trial.billing_to_address')
+      = f.input :bill_to_email, :label => t('clinical_trial.billing_to_email')
+
+      %p
+        = f.button :submit, class: "btn btn-success btn-lg"
+:javascript
+  $(document).ready( function() {
+
+    //$('input.datepicker').datepicker();
+    //$.datepicker.setDefaults( $.datepicker.regional[ "fr" ] );
+  });

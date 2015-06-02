@@ -1,0 +1,42 @@
+%p
+  = link_to t('clinical_trial_visits.go_back'), clinical_trial_path(@clinical_trial), class: 'btn btn-primary btn-xs'
+
+%h1= t("visit.manage_visits")
+%h2
+  = t("clinical_trial.clinical_trial") + ': '
+  %b= @clinical_trial.study_title
+.row
+  .col-sm-12
+    %table.table.table-hover
+      %thead
+        %tr
+          %th
+            = t("visit.name")
+          %th
+            = t("visit.when")
+          %th
+            = t("visit.activity_count")
+          %th
+            = t("visit.total_amount")
+
+      %tbody
+        - @clinical_trial.visits.each do |visit|
+          %tr
+            %td
+              = visit.name
+            %td
+              = visit_when(visit).html_safe
+            %td.text-center
+              = visit.activities.length
+            %td.text-center
+              = number_to_currency visit.total_amount
+            %td
+              = link_to t("default_action.show"), show_visit_clinical_trial_path(@clinical_trial, visit)
+            %td
+              = link_to t("default_action.edit"), edit_visit_clinical_trial_path(@clinical_trial, visit)
+            %td
+              = link_to t("default_action.destroy"), destroy_visit_clinical_trial_path(@clinical_trial, visit), :method => :post, :data => { :confirm => "#{t('are_you_sure_confirmation')}" }
+
+    = link_to t("visit.add_visit"), new_visit_clinical_trial_path(@clinical_trial), class: "btn btn-primary"
+
+

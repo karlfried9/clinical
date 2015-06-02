@@ -1,0 +1,472 @@
+en:
+  activerecord:
+    models:
+      clinical_trial: Clinical Trial
+  helpers:
+    submit:
+      clinical_trial_attachment:
+        create: Upload a file attachment
+      clinical_trial_visit:
+        create: Create new Clinical Trial Visit
+        update: Updade Clinical Trial Visit
+      trial_sponsor:
+        create: Create new Sponsor
+        update: Update this Sponsor
+      patient_visit:
+        update: Update patient visit
+        create: Record patient visit
+      activity:
+        create: Create new activity
+        update: Update activity
+      patient:
+        create: Create new patient
+        update: Update this patient
+  general:
+    year: Year
+    month: Month
+    required_fields_hint: 'Note: Fields with a * indicate required and cannot be blank'
+    export_time: Excel export time
+    export_to_excel: Excel Export
+    select_date: Select Date
+  menu:
+    home: Home
+    organizations: Organizations
+    sign_out: Sign out
+    users: Users
+    edit_account: Edit Account
+  visitors:
+    patient_visits: Patient Visits
+    view_reports: View Reports
+    create_invoice: Create Invoice
+    my_activities: My Activities
+    my_facility: My Facility
+    my_patients: My Patients
+    clinical_trials: Clinical Trials
+    sponsor: Sponsor
+    facility_administration: Facility Administration
+    add_edit_doctors: Add/edit doctors
+  users:
+    index:
+      clinic_manager: Clinic Manager
+      clinic_managers: Clinic Managers
+      new_clinic_manager: New Clinic Manager
+      doctor: Doctor
+      doctors: Doctors
+      new_doctor: New Doctor
+      edit_user: Edit User
+      doctors_and_clinic_managers: Doctors and Clinic Managers
+      name: Nom
+      email: Email
+      type: Type
+    message_error_saving: 'prohibited this User from being saved:'
+    save_button: Save
+    new_clinic_manager_title: New Clinic Manager
+    new_doctor_title: New Doctor
+    user: User
+  show: Show
+  edit: Edit
+  destory: Destroy
+  are_you_sure_confirmation: Are you sure?
+  patient:
+    name: Name
+    patients: Patients
+    patient: Patient
+    add_new_patient: Add New Patient
+    first_name: First Name
+    last_name: Last Name
+    patient_id: Patient ID
+    salutation: Salutation
+    date_of_birth: Date of Birth
+    notes: Notes
+    select_patient: Select a patient
+    error_message_saving_patient_record: 'prohibited this patient record from being
+      saved:'
+    edit_page_title: Editing Patient
+    clinical_trial_not_assigned: Not assigned.  Click here to assign.
+    no_visits_recorded: No visits recorded
+  clinical_trial:
+    clinical_trials: Clinical Trials
+    clinical_trial: Clinical Trial
+    name: Name
+    description: Description
+    sponsor: Clinical Trial Sponsor
+    phase: Phase
+    new_clinical_trial: New Clinical Trial
+    start_date: Start Date
+    trial_sponsor: Trial Sponsor
+    product_id: Product ID
+    status: Status
+    drug_name: Drug Name
+    organ: Organ
+    disease_stage: Disease Stage
+    study_acronym: Study Acronym
+    official_study_title: Official Study Title
+    secondary_ids: Secondary Ids
+    enrollment_begin_date: Enrollment Begin Date
+    enrollment_end_date: Enrollment End Date
+    expected_trial_enrollment_count: Expected total enrollment at this facility
+    primary_completion_date: Primary Completion Date
+    study_completion_date: Study Completion Date
+    masking: Masking
+    overall_study_status: Overall Study Status
+    recruitment_status_at_facility: Recruitment Status at Facility
+    principal_investigator: Principal Investigator
+    clinical_assistant: Clinical Assistant
+    other_information: Other Information
+    editing_clinical_trial: Editing Clinical Trial
+    select_clinical_trial: Select Clinical Trial
+    show: Show
+    edit: Edit
+    destroy: Destroy
+    delete_this_clinical_trial: Delete this clinical trial
+    go_back: Back
+    visit:
+      should_occur: Should Occur
+      days: Days
+      within_plus_minus_days: 'Visit must be within (window: +/- days)'
+    billing_to_address: Billing To (mailing address)
+    billing_to_email: Bill to email address
+    add_sponsor: Add Clinical Trial Sponsor
+    attachments:
+      attachment: Documents and File Attachments
+      attachment_error_select_file: Please select a file to upload and attach to this clinical trial!
+      upload_selected_file: Upload selected file
+      download: Download
+      name: Document Name
+      size: Size
+      updated_at: Updated at
+    hint:
+      select_or_add_sponsor: Select the sponsor, if it doesn't exist, please create one from the main screen
+      expected_enrollment: How many total patients are you expecting to recruit for this trial at your center?
+      clinical_assistant_contant_info: Name and Contact information (Email / Phone Number)
+    page_lead: Create a new clinical trial using this form.  It contains the basic fields for the trial.  You can add Arms, Protocol Visits and also upload documents after you have created the clinical trial by going to the 'Show' page
+    flash_successfully_created: "Clinical trial visit was successfully created."
+    flash_successfully_updated: "Clinical trial visit was successfully updated."
+    flash_successfully_deleted: "Clinical trial visit was successfully destroyed."
+  patient_activity:
+    patient_activities: Patient Activities
+    new_patient_activity: New Patient Activity
+    patient: Patient
+    clinic_trial: Clinic Trial
+    activity_date: Activity date
+    body_part: Body part
+    prescription_written: Prescription written
+    prescription_notes: Prescription notes
+    amount_charged: Amount charged
+  sponsor:
+    sponsors: Listing Trial Sponsors
+    new_sponsor: New Trial Sponsor
+    name: Name
+    contact_info: Contact Info
+    error_saving_message: 'prohibited this sponsor from being saved:'
+    editing_sponsor_title: Editing Clinical Trial Sponsor
+  simple_form:
+    labels:
+      activity:
+        amount: Amount
+        billable: Billable?
+        category: Category
+        name: Name
+      patient:
+        salutation: Salutation
+        first_name: First Name
+        last_name: Last Name
+        patient_id: Patient ID
+        date_of_birth: Date of Birth
+        notes: Notes
+        clinical_trial: Clinical Trial Enrollment
+      clinical_trial:
+        organization: Organization
+        protocol_id: Protocol ID
+        trial_ID: Trial ID
+        name: Name
+        arm_name: Arm Name
+        phase: Phase
+        ct_status: Status
+        drug_name: Drug Name
+        organ: Organ
+        disease_stage: Disease Stage
+        trial_sponsor: Sponsor
+        principal_investigator: Principal Investigator Name
+        expected_trial_enrollment_count: Expected total enrollment at this facility
+        clinical_assistant: Clinical Assistant
+        other_information: Other Information
+        start_date: Start Date
+        bill_to_email: Bill to Email Address
+        billing_to: Bill to Mailing Address
+        enrollment_begin_date: Enrollment Begin Date
+        enrollment_end_date: Enrollment End Date
+        masking: Masking
+        official_study_title: Official Study Title
+        overall_study_status: Official Study Status
+        primary_completion_date: Primary Completion Date
+        recruitment_status_at_facility: Recruitment Status at Facility
+        secondary_ids: Secondary ID(s) for clinical trial (optional)
+        study_acronym: Clinical Trial Acronym
+        study_completion_date: Clinical Trial Completion Date
+        study_title: Clinical Trial Title
+      patient_activity:
+        patient: Patient
+        clinic_trial: Clinic Trial
+        activity_date: Activity date
+        body_part: Body part
+        prescription_written: Prescription written
+        prescription_notes: Prescription notes
+        amount_charged: Amount charged
+      trial_sponsor:
+        name: Name
+        contact_info: Contact Info
+      clinical_trial_visit:
+        name: Visit Name
+        Description: Description
+        visit_type: Type of visit
+        after_visit: Select preceding visit
+        visit_format: Visit format
+      clinical_trial_attachment:
+        content: Content
+      invoice:
+        clinical_trial: Clinical Trial
+  invoice:
+    invoice: Invoice
+    invoice_number: Invoice Number
+    step1_message: Step 1 - Select Clinical Trial
+    step2_message: Step 2 - Select Dates
+    step3_message: Step 3 - Include Activities
+    step4_message: Step 4 - Billing info
+    your_trial: Your trials
+    all_dates: All dates
+    specific_dates: Specific dates
+    from: From
+    to: To
+    select_all: Select All
+    deselect_all: Deselect All
+    notes: Notes
+    create_invoice: Create Invoice
+    edit_invoice: Edit Invoice
+    show: Show
+    back: Back
+    invoices: Invoices
+    advanced_invoice_creation: Advanced Invoice Creation
+    recent_invoices: Recent Invoices
+    created_date: Created date
+    invoice_status: Invoice Status
+    amount: Amount
+    actions: Actions
+    view: View
+    edit: Edit
+    delete: Delete
+    confirm_message: Are you sure?
+    pagination_left: '<<'
+    pagination_right: '>>'
+    one_step_invoice: One-Step Invoice Creation
+    clinical_trial_name: Clinical Trial Name
+    uninvoiced_activities: Un-invoiced Activities
+    pdf: PDF
+    total_sm: Total
+    status: Status
+    patient_id: Patient ID
+    activity: Activity
+    total_bg: TOTAL
+    add_comment: Add Comment
+    modal_dlg_close: ×
+    write_comment_msg: Please write your comment
+    draft: Draft
+    issued: Issued
+    sent: Sent
+    archived: Archived
+    paid: Paid
+    partially_paid: Partially Paid
+    cancelled: Cancelled
+    all: All
+    issue: Issue
+    send: Send
+    archive: Archive
+    record_payment: Record Payment
+    cancel: Cancel
+    error_message: 'prohibited this invoice from being saved:'
+    payment_recieved: payment
+    comments: Comments
+    no_unbilled_activities: No unbilled activities.  All activities and visits are in invoiced.
+  payment:
+    payment_title: Record Payment
+    full_button: Full
+    partial_button: Partial
+    amount: Amount
+    notes: Notes
+    save: Save
+    cancel: Cancel
+    edit_payment_title: Editing Payment
+    listing_payments_title: Listing Payments
+  arm:
+    arm: Arm
+    arms: Arms
+    add_arm: Add New
+    arm_name: Arm Name
+    description: Description
+    save: Save
+    cancel: Cancel
+    manage_arms: Manage Arms
+  visit:
+    visit_schedule: Visit Schedule
+    view: View visit
+    edit: Edit visit
+    add_visit: Add New Visit
+    edit_visit: Edit Visit
+    name: Visit Name
+    hint: (e.g. Enrollment visit, Screening visit, Initial dosage)
+    when: When
+    activity_count: Activity Count
+    total_amount: Total Amount
+    study_dates: Dates
+    status: Visit status
+    save: Save
+    cancel: Cancel
+    manage_visits: Manage Visits
+    should_occur: La visite devrait avoir lieu ...
+    action: Action
+    patient_visit: Patient Visit
+    visit_format: Visit Format
+    visit_type: Visit Type
+    from: From
+    to: To
+    completed: Completed
+    record_visit: Record visit
+    warning: Warning
+    outside_message: Warning - Visit is outside the window of protocol dates... Please review/ensure compliance before recording
+    description: Description
+    add_another_activity: Add Another Activity
+    schedule: Schedule
+    reschedule: Reschedule
+    scheduled: Scheduled
+    not_scheduled: Not Scheduled
+    create_new: New Patient Visit
+    for: for
+    activities_during_visit: Activities During Visit
+    date_of_most_recent_visit: "Date of last visit"
+    name_of_most_recent_visit: "Most recent visit"
+  activity:
+    add_more: Rajouter une activité
+    name: Name
+    amount: Amount
+    activity: Activity
+    category: Category
+    action: Action
+    add: Add
+    billable: Billable?
+    activity_performed: Activity performed?
+    save: Save
+    cancel: Cancel
+    editing_activity: Editing activity
+    show: Show
+    go_back: Back
+    type: Type
+    flash_successfully_created: "Activity was successfully created."
+    flash_successfully_updated: "Activity was successfully updated."
+    flash_successfully_deleted: "Activity was successfully destroyed."
+  clinical_trial_type:
+    enrollment: Enrollment
+    follow_up: Follow-up
+    early_termination: Early termination
+    end_of_study: End of Study
+  clinical_trial_visit_format:
+    in_person: In-person
+    phone_call: Phone Call
+    other: other
+  disease_stage:
+    early_form: Early form
+    localized: Localized
+    early_locally_advanced: Early Locally Advanced
+    late_locally_advanced: Late Locally Advanced
+    metastasized: Metastasized
+  study_status:
+    study_not_yet_recruiting: Not yet recruiting
+    study_recruiting: Recruiting
+    study_enrolling_by_invitation: Enrolling by invitation
+    study_active_not_recruiting: Active, not recruiting (study ongoing)
+    study_completed: Completed (study concluded normally)
+    study_suspended: Suspended (potentially could be resumed)
+    study_terminated: Terminated (prematurely halted, participants no longer being examined/treated)
+    study_withdrawn: Withdrawn (study halted prior to enrollment of first participant)
+  clinical_trial_masking:
+    open: Open
+    single: Single
+    blind: Blind
+    double_blind: Double Blind
+  activity_type:
+    procedure: Procédure
+    diagnosis: Diagnostique
+    drug: Médicament
+    other: Autre
+  clinical_trial_phase:
+    phase1: Phase I
+    phase2: Phase IIa
+    phase3: Phase IIb
+    phase4: Phase III
+  clinical_trial_status:
+    created: Created
+    being_selected: Being selected
+    selection_complete: Selection complete
+    open_for_patient_enrollment: Open for Patient Enrollment
+    closed_for_enrollment: Closed for Enrollment
+    on_hold: On hold
+  clinical_trial_organ:
+    head: head
+    eyes: eyes
+    neck: neck
+    lungs: lungs
+  monthly_charge_report:
+    report_title: Monthly Charge Report
+    total_since_start: Total Since Start
+    monthly_charge_amount: Billable Amount
+    report_description: This report shows billable activities for a clinical trial by year/month
+    billable_amount: Billable amount
+  clinical_trial_arm:
+    go_back: Back
+  clinical_trial_visits:
+    go_back: Back
+    listing: Listing Clinical Trial Visits
+    manage: Manage Visits
+    create_visit_for: Create Visit For
+  default_action:
+    edit: Edit
+    go_back: Back
+    show: Show
+    destroy: Destroy
+    search: search
+  default_message:
+    error: error
+  organization:
+    editing_organization: Editing organization
+    listing: Listing organizations
+    create_new: New Organization
+  activities:
+    already_exists_alert: this activity already exists for this visit.  Cannot be added twice
+    listing_activities_page_title: Listing activities
+    description: The table below shows all activities performed at your facility which will be available to clinical trial theoretical visits and actual patient visits.  The amounts can be adjusted for each clinical trial based on negotiated rates with the sponsors.
+    add_new_activity_button: Add New Activity
+    new_activity: New activity
+    hint_category: Enter any categories/tags you would like for organizing this activity. Type a category word and press enter.  Multiple category identifiers can be added (optional)
+    hint_code_type: Code type to identify this activity (optional)
+    hint_code: Optional Code/ID for this activity (optional)
+  description: Description
+  clinical_trial_visit:
+    editing: Editing Clinical Trial Visit
+    create_new_button_label: New Clinical trial visit
+    create_new_page_title: New Clinical Trial Visit
+    how_many_days: How many days
+    offset_description: Some clinical trials require visits to take place within a certain period of time after enrollment/screening or after another visit.  You can use the fields below to create this visit dependency. e.g. Visit 1 must take place 30 days after Enrollment visit, plus-minus 5 days
+  Reports:
+    reports: Reports
+  reports:
+    monthly_revenue_report: Monthly Revenue Report
+    clinical_trial_progress_report: Clinical Trial Progress Report
+    expected_enrollments: Expected Enrollments
+    actual_enrollments: Actual Enrollments to-date (including completion)
+    enrollment_gap: Enrollment Gap
+    patients_by_visit: Patients by Clinical Trial Visit Stage
+  patient_visit:
+    page_title_patient_visits: Patient Visits
+    page_lead: You can view status of patient visits for a particular clinical trial.  First select a clinical trial, then select a patient from the dropdown.  This contains only the patients who are enrolled in the clinical trial
+    pick_schedule_date: Pick a date to schedule patient visit
+  alerts:
+    access_denied: Access denied.

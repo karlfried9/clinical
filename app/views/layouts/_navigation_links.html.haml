@@ -1,0 +1,17 @@
+= link_to t('menu.home'), root_path, class: 'navbar-brand'
+
+- if user_signed_in?
+  %li= link_to t('visitors.patient_visits'), patient_visits_path
+  %li= link_to t('visitors.my_patients'), patients_path
+  %li= link_to t('clinical_trial.clinical_trials'), clinical_trials_path
+  %li= link_to t('visitors.view_reports'), reports_path
+  %li= link_to t('invoice.invoice'), invoices_path
+  -#%li= link_to t('menu.edit_account', :default => 'Edit account'), edit_user_registration_path
+  -#- if current_user.role_id and current_user.super_admin?
+  -#  %li= link_to t('menu.organizations', :default => 'Organizations'), organizations_path
+  -#
+  -#- if policy(current_user).index?
+  -#  %li= link_to t('menu.users', :default => 'Users'), users_path
+
+
+

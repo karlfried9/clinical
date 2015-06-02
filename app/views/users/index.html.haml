@@ -1,0 +1,28 @@
+.container
+  .row
+    -if current_user.super_admin?
+      %h1= t('.doctors_and_clinic_managers', :default => 'Doctors and Clinic Managers')
+    -elsif current_user.clinic_manager?
+      %h1= t('.doctors', :default => 'Doctors')
+
+    %br
+    %table.table
+      %thead
+        %tr
+          %th= t('.name', :default => "Name")
+          %th= t('.email', :default => "Email")
+          %th= t('.type', :default => "Type")
+          %th
+          %th
+          %th
+      %tbody
+        - @users.each do |user|
+          %tr
+            = render user
+
+    -if current_user.clinic_manager?
+      = link_to t('.new_doctor' ,:default => 'New Doctor'), new_doctor_path, class: "btn btn-primary"
+    -if current_user.super_admin?
+      = link_to t('.new_clinic_manager' ,:default => 'New Clinic Manager'), new_clinic_manager_path, class: "btn btn-primary"
+    %br
+

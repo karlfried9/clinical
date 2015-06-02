@@ -1,0 +1,32 @@
+-if @user.clinic_manager?
+  %h1= t('users.edit_clinic_manager', :default=>"Edit Clinic Manager")
+-else
+  %h1= t('users.edit_doctor', :default=>"Edit Doctor")
+
+= form_for(@user) do |f|
+  - if @user.errors.any?
+    %h2= "#{pluralize(@user.errors.count, "error")} prohibited this User from being saved:"
+    %ul
+      - @user.errors.full_messages.each do |msg|
+        %li= msg
+  -if @user.clinic_manager?
+    = f.hidden_field :role_id
+    = f.collection_select :organization, Organization.all.order(:name), :id, :name
+  -else
+    = f.hidden_field :role_id
+    = f.hidden_field :organization_id
+  .form-group
+    = f.label :name
+    = f.text_field :name, :autofocus => true, class: 'form-control'
+  .form-group
+    = f.label :email
+    = f.email_field :email, class: 'form-control'
+  .form-group
+    = f.label :password
+    = f.password_field :password, class: 'form-control'
+  .form-group
+    = f.label :password_confirmation
+    = f.password_field :password_confirmation, class: 'form-control'
+  = f.submit t('users.save_button'), :class => 'btn btn-primary'
+
+= link_to t('default_action.go_back'), users_path

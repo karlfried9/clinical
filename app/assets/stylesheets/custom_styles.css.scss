@@ -1,0 +1,46 @@
+
+
+.main-well {
+  margin-top: 100px;
+  background-color: #FFFFFF !important;
+}
+
+.small-thumbs{
+   width:50px !important;
+   height:50px !important;
+}
+
+.thumb:hover {
+  background-color: #FFDFAE;
+  text-decoration: none !important;
+  color: black;
+  -webkit-transition: background 0.25s linear;
+  -moz-transition: background 0.25s linear;
+  -ms-transition: background 0.25s linear;
+  -o-transition: background 0.25s linear;
+  transition: background 0.25s linear;
+}
+
+.thumb {
+  color: black;
+}
+
+.head {
+  font-size: 2em;
+  text-decoration: none;
+  
+}
+
+.head-sm {
+  font-size: 1.25em;
+}
+
+.section-header {
+  background-color: white;
+  color: gray;
+  font-size: 1.5em;
+}
+
+.btn-row {
+  margin-bottom: 10px;
+}

@@ -1,0 +1,187 @@
+%p
+  = link_to t("default_action.go_back"), clinical_trials_path, :class => 'btn btn-xs btn-primary'
+%p#notice= notice
+%p
+  %h1
+    = t("clinical_trial.clinical_trial") + ":"
+    %b= @clinical_trial.study_title
+.row
+  .col-sm-5.well
+    %p.text-right
+      = link_to t('clinical_trial.edit'), edit_clinical_trial_path(@clinical_trial), class: "btn btn-primary btn-xs"
+    %p
+      %b
+        = t("clinical_trial.start_date") + ":"
+      = l @clinical_trial.start_date
+    %p
+      %b
+        = t("clinical_trial.trial_sponsor") + ":"
+      = @clinical_trial.trial_sponsor.name
+    %p
+      %b
+        = t("clinical_trial.product_id") + ":"
+      = @clinical_trial.protocol_id
+    %p
+      %b
+        = t("clinical_trial.phase") + ":"
+      = @clinical_trial.phase.name
+    %p
+      %b
+        = t("clinical_trial.status") + ":"
+      = @clinical_trial.ct_status.name
+    %p
+      %b
+        = t("clinical_trial.drug_name") + ":"
+      = @clinical_trial.drug_name
+    %p
+      %b
+        = t("clinical_trial.organ") + ":"
+      = @clinical_trial.organ.name
+    %p
+      %b
+        = t("clinical_trial.disease_stage") + ":"
+      = @clinical_trial.disease_stage.name
+    %p
+      %b
+        = t("clinical_trial.study_acronym") + ":"
+      = @clinical_trial.study_acronym
+    %p
+      %b
+        = t("clinical_trial.official_study_title") + ":"
+      = @clinical_trial.official_study_title
+    %p
+      %b
+        = t("clinical_trial.secondary_ids") + ":"
+      = @clinical_trial.secondary_ids
+    %p
+      %b
+        = t("clinical_trial.enrollment_begin_date") + ":"
+      = l @clinical_trial.enrollment_begin_date
+    %p
+      %b
+        = t("clinical_trial.enrollment_end_date") + ":"
+      = l @clinical_trial.enrollment_end_date
+    %p
+      %b
+        = t("clinical_trial.expected_trial_enrollment_count") + ":"
+      = @clinical_trial.expected_trial_enrollment_count
+    %p
+      %b
+        = t("clinical_trial.trial_sponsor") + ":"
+      = l @clinical_trial.primary_completion_date
+    %p
+      %b
+        = t("clinical_trial.study_completion_date") + ":"
+      = l @clinical_trial.study_completion_date
+    %p
+      %b
+        = t("clinical_trial.masking") + ":"
+      = @clinical_trial.masking.name
+    %p
+      %b
+        = t("clinical_trial.overall_study_status") + ":"
+      = @clinical_trial.overall_study_status.name
+    %p
+      %b
+        = t("clinical_trial.recruitment_status_at_facility") + ":"
+      = @clinical_trial.recruitment_status_at_facility.name
+    %p
+      %b
+        = t("clinical_trial.principal_investigator") + ":"
+      = @clinical_trial.principal_investigator
+    %p
+      %b
+        = t("clinical_trial.clinical_assistant")
+      = @clinical_trial.clinical_assistant
+    %p
+      %b
+        = t("clinical_trial.other_information")
+      = @clinical_trial.other_information
+
+  .col-sm-7
+    %p
+      %h3
+        = t("arm.arms")
+    %table.table
+      %thead
+        %tr
+          %th
+            = t("arm.arm_name")
+          %th
+            = t("arm.description")
+
+      %tbody
+        - @clinical_trial.arms.each do |arm|
+          %tr
+            %td
+              = arm.name
+            %td
+              = arm.description
+
+    = link_to t("arm.manage_arms"), manage_arms_clinical_trial_path(@clinical_trial), class: "btn btn-primary"
+
+    %p
+      %h3
+        = t("visit.visit_schedule")
+    %table.table
+      %thead
+        %tr
+          %th
+            = t("visit.name")
+          %th
+            = t("visit.when")
+          %th
+            = t("visit.activity_count")
+          %th
+            = t("visit.total_amount")
+      %tbody
+        - @clinical_trial.visits.each do |visit|
+          %tr
+            %td
+              = visit.name
+            %td
+              = visit_when(visit).html_safe
+            %td
+              = visit.activities.length
+            %td
+              = number_to_currency(visit.total_amount)
+
+    = link_to t('clinical_trial_visits.manage'), manage_visits_clinical_trial_path(@clinical_trial), class: "btn btn-primary"
+
+    %p
+      %h3
+        = t("clinical_trial.attachments.attachment")
+    %table.table
+      %thead
+        %tr
+          %th
+            = t("clinical_trial.attachments.name")
+          -#%th
+          -#  = t("attachment.type")
+          %th
+            = t("clinical_trial.attachments.size")
+          %th
+            = t("clinical_trial.attachments.updated_at")
+      %tbody
+        - @clinical_trial.attachments.each do |attachment|
+          %tr
+            %td
+              = attachment.content_file_name
+            -#%td
+            -#  = attachment.content_content_type
+            %td
+              = number_to_human_size(attachment.content_file_size, precision: 2, separator: ',')
+            %td
+              = l attachment.content_updated_at
+            %td
+              = link_to t('default_action.destroy'), clinical_trial_remove_attachment_path(@clinical_trial, attachment), data: {confirm: "#{"t('are_you_sure_confirmation')"}"}
+            %td
+              = link_to t("clinical_trial.attachments.download"), attachment.content.url, target: "_blank"
+    = simple_form_for @clinical_trial_attachment, url: clinical_trial_add_attachment_path do |form|
+      = form.input :content, as: :file
+      = form.button :submit, class: "btn btn-primary btn-md"
+%hr
+  .text-left
+    = link_to t('clinical_trial.delete_this_clinical_trial'), @clinical_trial, :method => :delete, :data => { :confirm => "#{t('are_you_sure_confirmation')}" }, class: "btn btn-xs btn-danger"
+
+

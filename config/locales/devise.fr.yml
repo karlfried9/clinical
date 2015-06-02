@@ -1,0 +1,72 @@
+fr:
+  devise:
+    confirmations:
+      new:
+        resend_confirmation_instructions: Renvoyer les instructions de confirmation
+    mailer:
+      confirmation_instructions:
+        action: Confirmer mon courriel
+        greeting: Bienvenue %{recipient}!
+        instruction: Conformer votre inscription grace au lien ci-dessous
+      reset_password_instructions:
+        action: Changer mon mot de passe
+        greeting: Bonjour %{recipient}!
+        instruction: 'Quelqu''un a demandé un lien pour changer votre mot de passe,
+          le voici :'
+        instruction_2: Si vous n'avez pas émis cette demande, merci d'ignorer ce courriel.
+        instruction_3: Votre mot de passe ne changera pas tant que vous n'aurez pas cliqué sur ce lien et enregistrer un nouveau mot de passe.
+      unlock_instructions:
+        action: Débloquer mon compte
+        greeting: Bonjour %{recipient}!
+        instruction: 'Suivez ce lien pour débloquer votre compte:'
+        message: Votre compte a été bloqué suite à un nombre d'essais de connexions manquées trop important
+    passwords:
+      new:
+        forgot_your_password: Mot de passe oublié ?
+        send_me_reset_password_instructions: Envoyez-moi les instructions pour réinitialiser mon mot de passe
+      edit:
+        change_your_password: Changer votre mot de passe
+        new_password: Nouveau mot de passe
+        confirm_new_password: Confirmez votre nouveau mot de passe
+        change_my_password: Changer mon mot de passe
+    registrations:
+      edit:
+        are_you_sure: Êtes-vous sûr ?
+        cancel_my_account: Supprimer mon compte
+        leave_blank_if_you_don_t_want_to_change_it: laissez ce champ vide pour le laisser inchangé
+        currently_waiting_confirmation_for_email: 'Confirmation en attente: %{email}'
+        title: Modifier %{resource}
+        we_need_your_current_password_to_confirm_your_changes: nous avons besoin de votre mot de passe pour valider ces modifications
+        update: Mettre à jour
+        unhappy: Mecontent
+      new:
+        sign_up: S'inscrire
+    sessions:
+      new:
+        sign_in: Se connecter
+    shared:
+      links:
+        back: Retour
+        didn_t_receive_confirmation_instructions: Vous n'avez pas reçu le email de confirmation ?
+        didn_t_receive_unlock_instructions: Vous n'avez pas reçu le email de déblocage ?
+        forgot_your_password: Mot de passe oublié ?
+        sign_in: Se connecter
+        sign_in_with_provider: Se connecter avec %{provider}
+        sign_up: S'inscrire
+    unlocks:
+      new:
+        resend_unlock_instructions: Renvoyer les instructions de déblocage
+    password:
+      we_will_send_password_reset_instructions: Nous vous envoyons les instructions de réinitialisation du mot de passe.
+      reset_password: Réinitialiser le mot de passe
+      send_me_reset_password_instructions: Envoyez-moi les instructions pour réinitialiser mon mot de passe
+  activerecord:
+    models:
+      user: Utilisateurs
+    attributes:
+      user:
+        email: Courriel
+        password: Mot de passe
+        password_confirmation: Confirmation du mot de passe
+        current_password: Mot de passe actuel
+        remember_me: Se souvenir de moi

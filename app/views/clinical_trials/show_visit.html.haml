@@ -1,0 +1,50 @@
+%p= link_to t('default_action.go_back'), manage_visits_clinical_trial_path(@clinical_trial, @clinical_trial_visit), class: 'btn btn-primary btn-xs'
+
+%h1
+  = t("simple_form.labels.clinical_trial_visit.name") + ": "
+  %b= @clinical_trial_visit.name
+%h2
+  = t("clinical_trial.clinical_trial")+ ": "
+  %b= @clinical_trial.study_title
+.row
+  .col-sm-12
+    - if @clinical_trial_visit.after_visit
+      %h3
+        = t("visit.when") +": "
+        %b= visit_when(@clinical_trial_visit).html_safe
+    %p
+      %b
+        = t("visit.description") + ": "
+      = @clinical_trial_visit.description
+      .row
+        .col-sm-6
+          %p
+            %b
+              = t("visit.visit_type")+ ": "
+            = @clinical_trial_visit.visit_type.name
+          %p
+            %b
+              = t("visit.visit_format")+ ": "
+            = @clinical_trial_visit.visit_format.name
+
+
+    .row
+      %table.table#tbl_activities
+        %thead
+          %th
+            = t("activity.activity")
+          %th
+            = t("activity.category")
+          %th
+            = t("activity.amount")
+          %th
+        %tbody
+          - @clinical_trial_visit.activities.each do |activity|
+            %tr
+              %td
+                = activity.activity.name
+              %td
+                = activity.activity.category_list
+              %td
+                = number_to_currency activity.amount
+= link_to t('default_action.edit'), edit_visit_clinical_trial_path(@clinical_trial, @clinical_trial_visit), class: "btn btn-primary"

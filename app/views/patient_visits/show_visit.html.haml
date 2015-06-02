@@ -1,0 +1,40 @@
+%p
+%a.btn.btn-primary.btn-xs{:href => load_visit_patient_visits_path(:patient_id => @patient, :clinical_trial_id => @clinical_trial_visit.clinical_trial)}
+  = t("default_action.go_back")
+%h1
+  = t("visit.view")
+%h1
+  %b= @patient.salutation + " " + @patient.first_name + " " + @patient.last_name
+%h2= l @patient_visit.updated_at, format: :long
+
+.row
+  .col-sm-12
+    %p
+      %b
+        = t("visit.description") + ":"
+      = @patient_visit.description
+
+    .row
+      %table.table#tbl_activities
+        %thead
+          %th
+            = t("activity.activity")
+          %th
+            = t("activity.amount")
+          %th
+            = t("activity.activity_performed")
+          %th
+            = t("activity.billable")
+        %tbody
+          - @activities.each do |activity|
+            %tr
+              %td
+                = activity.activity.name
+              %td
+                = number_to_currency activity.amount
+              %td
+                -if activity.performed
+                  %span.glyphicon.glyphicon-ok{"aria-hidden" => "true"}
+              %td
+                -if activity.billable
+                  %span.glyphicon.glyphicon-ok{"aria-hidden" => "true"}

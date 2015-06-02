@@ -1,0 +1,9 @@
+.authform
+  = form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post, :role => 'form'}) do |f|
+    %h3= t('devise.password.new.forgot_your_password')
+    %p= t('devise.password.we_will_send_password_reset_instructions')
+    = devise_error_messages!
+    .form-group
+      = f.label :email
+      = f.email_field :email, :autofocus => true, class: 'form-control'
+    = f.submit "Reset", :class => 'button right'

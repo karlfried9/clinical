@@ -1,0 +1,12 @@
+wb = xlsx_package.workbook
+
+wb.styles do |s|
+    header =  s.add_style  :bg_color => "0000FF", :fg_color => "FF", :sz => 12, :alignment => { :horizontal=> :center }
+    wb.add_worksheet(name: "PatientVisits") do |sheet|
+        sheet.add_row [t('clinical_trial.clinical_trial'), t('patient.patient'), t('visit.name'), 'Date'], style: header
+        @patient_visit.each do |pv|
+            sheet.add_row [pv.clinical_trial.study_title, pv.patient.salutation + " " + pv.patient.first_name + " " + pv.patient.last_name, pv.clinical_trial_visit.name, pv.recorded_date]
+        end
+        sheet.column_widths 50, 35, 30, 20
+    end
+end

@@ -1,0 +1,33 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}/
+    %title= content_for?(:title) ? yield(:title) : "Doctor"
+    %meta{:content => "#{content_for?(:description) ? yield(:description) : "Doctor"}", :name => "description"}/
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    %link{:href=>"//maxcdn.bootstrapcdn.com/bootswatch/3.3.2/cosmo/bootstrap.min.css", :rel=>"stylesheet"}
+    = csrf_meta_tags
+
+  %body{style: "height: 800px;"}
+    %header
+      = render 'layouts/navigation'
+    %main.wrapper{:role => "main"}
+      .container
+        .row
+          = render 'layouts/messages'
+          = yield
+    %hr
+    .footer.text-center.small.text-muted
+      (c) ALGONIUM, LLC.
+      %p
+        %span{style: "background-color: yellow;"}
+          Attention:
+        ce logiciel est une version beta. N’enregistrez pas d’informations relatives à des cas réels de patients ou d’essais cliniques. Tous fichiers téléchargés dans ce logiciel seront automatiquement effacés dans les 24 heures
+      %p
+        Change to / à changer:
+        -if I18n.locale == I18n.default_locale
+          = link_to "English", :locale=>'en'
+        -else
+          = link_to "Français", :locale=>'fr'

@@ -1,0 +1,188 @@
+%h1
+  = t("visit.record_visit")
+%h1
+  %b= @patient.full_name
+.row
+  .col-sm-12
+    - if is_outdate(@clinical_trial_visit, @patient)
+      .alert.alert-warning
+        %button{:class=> "close", data: {:dismiss=> "alert"}, :type=>"button"}
+          ×
+        .div#flash_notice
+          =t('visit.outside_message')
+
+    = simple_form_for @patient_visit, :url => update_visit_patient_visits_path(@patient, @clinical_trial_visit), :method => :post do |f|
+      .form-group
+        = f.label :description
+        = f.text_area :description, :class => "form-control"
+
+      %table.table#tbl_activities
+        %thead
+          %th
+            = t("activity.activity")
+          %th
+            = t("activity.category")
+          %th
+            = t("activity.amount")
+          %th
+            = t("activity.activity_performed")
+          %th
+            = t("activity.billable")
+        %tbody
+      .row
+        .col-xs-12
+          = label_tag t("activity.add_more", :default => "Add More")
+      .row
+        .col-xs-8
+
+          //= text_field_tag t('default_action.search'), nil, :class => 'form-control', :placeholder => t("activity.activity", :default => "Activity"), data: {autocomplete: autocomplete_activity_name_activities_path}, :autocomplete=>"off", :id => 'activity_autocomplete'
+          %select.form-control{:name => 'source_activities', :id => 'source_activities', :class => 'form-control'}
+            - @source_activities.each do |activity|
+              %option{:value => activity.id}
+                = activity.name
+        .col-xs-4
+          = button_tag t("activity.add"), :type => "button", :class => "btn btn-primary", :id => "btn_add_activity", :onclick => "addActivity();"
+
+      = f.button :submit, class: "btn btn-success btn-lg"
+.modal.fade#editDlg
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %a.close{"data-dismiss" => "modal"}
+          = "x"
+
+        %h4.modal-title
+          %b
+            = t("activity.edit_activity")
+      .modal-body
+        .form-group
+          = label_tag t("activity.amount", :default => "Amount")
+          = text_field_tag "amount", "", :class => "text optional form-control"
+
+      .modal-footer
+        = button_tag "#{t("activity.cancel", :default => "Cancel")}", class: "btn btn-cancel", "data-dismiss" => "modal"
+        = button_tag "#{t("activity.save", :default => "Save")}", type: "button", class: "btn btn-success", :onclick => "changeActivity();"
+
+:javascript
+  var searched_activity = '';
+  var selected_activity = '';
+  var activities = {};
+  var source_activities = {};
+
+  $(document).ready(function(){
+    $('#activity_autocomplete').bind('autocompleteselect', function(event, ui) {
+      searched_activity = ui.item.obj;
+    });
+    initActivities();
+    $('#source_activities').select2({
+      placeholder: "Select Activity",
+      allowClear: true
+    });
+
+    //trigger functions for select2
+    $('#source_activities').on("change", function (e) { selectActivity(e); });
+    $('#clinical_trial_visit_type_id').on("change", function (e) { showOffsetWindow(); });
+
+    //hide offset_info div by default
+    showOffsetWindow();
+  });
+
+  function initActivities() {
+    var data = '#{@activities_json}';
+    var objs = {};
+    if (data != '') {
+      objs = JSON.parse('#{@activities_json}');
+      for (var i = 0; i < objs.length; i++) {
+        activities[objs[i].id] = objs[i].obj;
+        var row = "<tr id='activity" + activities[objs[i].id].activity_id + "'>" + getActivityRowHtml(activities[objs[i].id]) + "</tr>";
+        $('#tbl_activities > tbody:last').append(row);
+      }
+    }
+    objs = JSON.parse('#{@source_activities_json}');
+    for (var i = 0; i < objs.length; i++) {
+      source_activities[objs[i].id] = objs[i].obj;
+    }
+    searched_activity = objs[0].obj;
+  }
+
+  function selectActivity(e) {
+    searched_activity = source_activities[e.val];
+  }
+
+  function showOffsetWindow() {
+    e = $('#clinical_trial_visit_type_id').val();
+    if (e == "2") {
+      $('#offset_info').show();
+    } else {
+      $('#offset_info').hide();
+    }
+  }
+
+  function addActivity() {
+    console.log(searched_activity);
+    if ( searched_activity == '') {
+      return;
+    }
+    if ( searched_activity.id in activities) {
+      alert("this activity is already added!");
+      return;
+    }
+    activity_id = searched_activity.id;
+    activities[searched_activity.id] = clone(searched_activity);
+    activities[searched_activity.id]['activity_id'] = activity_id;
+    activities[searched_activity.id].id = "";
+    var row = "<tr id='activity" + searched_activity.activity_id + "'>" + getActivityRowHtml(activities[searched_activity.id]) + "</tr>";
+    console.log(row);
+    $('#tbl_activities > tbody:last').append(row);
+    searched_activity = '';
+    $('#activity_autocomplete').val('');
+    return;
+  }
+
+  function clone(obj) {
+    if (null == obj || "object" != typeof obj) return obj;
+    var copy = obj.constructor();
+    for (var attr in obj) {
+        if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
+    }
+    return copy;
+  }
+
+
+  function getActivityRowHtml(activity) {
+    if (!('billable' in activity)) {
+      activity['billable'] = 1;
+      activity['performed'] = 1;
+    }
+    var html =
+          "<td>" + "<input type='hidden' name='activities[][activity_id]' value='" + activity.activity_id + "'>"
+          + "<input type='hidden' name='activities[][id]' value='" + activity.id + "'>"
+          + activity.name + "<input type='hidden' name='activities[][name]' value='" + activity.name + "'></td>"
+          + "<td>" + activity.category_list.join() + "<input type='hidden' name='activities[][category_list]' value='" + activity.category_list.join() + "'></td>"
+          + "<td>" + this.number_to_euro(activity.amount) + "<input type='hidden' name='activities[][amount]' value='" + activity.amount + "'></td>"
+          + "<td>" + '<input class="boolean optional" type="checkbox"' + (activity.performed?' checked ':' ')
+          + 'name="activities[][performed]"></td>' //+ "<input type='hidden' name='activities[][performed]' value='" + activity.performed + "'></td>"
+          + "<td>" + '<input class="boolean optional" type="checkbox"' + (activity.billable?' checked ':' ')
+          + 'name="activities[][billable]"><td>' //+ "<input type='hidden' name='activities[][billable]' value='" + activity.billable + "'></td>"
+          + "<td><a href='#' onclick='editActivity(" + activity.activity_id + ")'>#{t('default_action.edit')}</a></td>"
+          + "<td><a href='#' onclick='removeActivity(" + activity.activity_id + ")'>#{t('default_action.destroy')}</a></td>";
+    return html;
+  }
+
+
+  function removeActivity(id) {
+    delete activities[id];
+    $('#activity'+id).remove();
+  }
+
+  function editActivity(id) {
+    selected_activity = activities[id];
+    $("#editDlg input[name=amount]").val(activities[id].amount);
+    $("#editDlg").modal('show');
+  }
+
+  function changeActivity() {
+    selected_activity.amount = $("#editDlg input[name=amount]").val();
+    $('#activity'+selected_activity.activity_id).html(getActivityRowHtml(selected_activity));
+    $("#editDlg").modal('hide');
+  }

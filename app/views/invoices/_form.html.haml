@@ -1,0 +1,140 @@
+= simple_form_for @invoice, html: { class: 'col-md-6' } do |f|
+  - if @invoice.errors.any?
+    #error_explanation
+      %h2
+        = "#{pluralize(@invoice.errors.count, t('default_message.error'))}"
+        = t('invoice.error_message')
+      %ul
+        - @invoice.errors.full_messages.each do |msg|
+          %li= msg
+
+  #step1
+    .h2
+      = t("invoice.step1_message")
+
+    %label
+      = t("invoice.your_trial")
+    = f.association :clinical_trial, :label_method => :study_title, :value_method => :id, input_html: { onchange: "onclinicalchange();" }
+  %hr
+  #step2
+    .h2
+      = t("invoice.step2_message")
+
+    #selectoption
+      = f.radio_button :dateoption, t("invoice.all_dates"), :onclick => "hideDate();"
+      %label
+        = t("invoice.all_dates")
+
+      = f.radio_button :dateoption, t("invoice.specific_dates"), :onclick => "showDate();"
+      %label
+        = t("invoice.specific_dates")
+    #specificdate
+      -#todo: Activities need to be showing according to the dates selected. Current form does not do search
+      .row
+        .col-sm-6
+          -#= f.input :fromdate, as: :date, html5: true, label: false
+          = f.input :fromdate, as: :date_picker, label: t("invoice.from"), input_html: { :class => "text required form-control"}, :id => "from_date", :placeholder => t('general.select_date')
+        .col-sm-6
+          -#= f.input :todate, as: :date, html5: true, label: false
+          = f.input :todate, as: :date_picker, label: t("invoice.to"), input_html: { :class => "text required form-control"}, :id => "to_date", :placeholder => t('general.select_date')
+
+
+  %hr
+  #step3
+    .h2
+      = t("invoice.step3_message")
+    %div
+      = link_to "#{t("invoice.select_all")}", '#', :onclick => "selectAll();", class: "btn btn-sm btn-primary"
+      = link_to "#{t("invoice.deselect_all")}", '#', :onclick => "deselectAll();",  class: "btn btn-sm btn-primary"
+    %div
+      %table#AAA.table
+        %thead
+          %tr
+            %td
+              = t("invoice.patient_id")
+            %td
+              = t("patient_activity.activity_date")
+            %td
+              = t("activity.amount")
+        %tbody
+          - if @activities
+            - @activities.each do |row|
+              %tr
+                %td
+                  = check_box_tag "activity[#{row.id}]", nil, @invoice.patient_activities.where(:id => row.id).count == 0 ? false : true
+                  = row.patient.patient_id
+                %td
+                  = row.patient_visit.recorded_date
+                %td
+                  = number_to_currency(row.amount)
+          - else
+            = t('invoice.no_unbilled_activities')
+  %hr
+  .form-group
+    #step4
+      .h2
+        = t("invoice.step4_message")
+      .col-sm-6
+        %label
+          = t("invoice.from")
+        = text_area_tag :billing_from, nil, :class => "text optional form-control"
+      .col-sm-6
+        %label
+          = t("invoice.to")
+        = text_area_tag :billing_to, nil, :class => "text optional form-control"
+
+      .col-sm-12
+        %label
+          = t("invoice.notes")
+        = f.text_area :notes, :class => "text optional form-control"
+        -#= text_area_tag :notes, nil, :class => "text optional form-control"
+
+  = f.submit t("invoice.create_invoice"), class: "btn btn-success btn-lg margin-top-50px"
+
+:javascript
+  $(document).ready( function() {
+
+    if($('#invoice_dateoption_specific_dates').is(":checked"))
+    {
+      $('#specificdate').show();
+      $('#invoice_dateoption_specific_dates').attr('checked',true);
+    }
+    else
+    {
+      $('#specificdate').hide();
+      $('#invoice_dateoption_all_dates').attr('checked',true);
+    }
+
+    $.ajax({
+          url: "#{clinical_trial_billinginfo_invoices_path}" + "&clinical_trial_id=" + $('#invoice_clinical_trial_id').val(),
+          dataType: "json"
+        }).done(function(data) {
+          $('#billing_from').html(data[0]);
+          $('#billing_to').html(data[1]);
+        });
+  } );
+
+  function onclinicalchange()
+  {
+    $.ajax({
+          url: "#{clinical_trial_billinginfo_invoices_path}" + "&clinical_trial_id=" + $('#invoice_clinical_trial_id').val(),
+          dataType: "json"
+        }).done(function(data) {
+          $('#billing_from').html(data[0]);
+          $('#billing_to').html(data[1]);
+        });
+  }
+
+  function showDate(){
+    $('#specificdate').show();
+  };
+  function hideDate(){
+    $('#specificdate').hide();
+  };
+
+  function selectAll(){
+    $('table#AAA input[type=checkbox]').attr('checked',true);
+  };
+  function deselectAll(){
+    $('table#AAA input[type=checkbox]').attr('checked',false);
+  };
